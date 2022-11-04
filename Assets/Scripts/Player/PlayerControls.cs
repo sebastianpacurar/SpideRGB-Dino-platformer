@@ -46,6 +46,24 @@ namespace Player
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Aim"",
+                    ""type"": ""Value"",
+                    ""id"": ""30d2003e-c665-4864-9da1-0ececcb135df"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Throw"",
+                    ""type"": ""Button"",
+                    ""id"": ""b1c16e4c-17cc-4f4a-b3b7-fe3a984a18ab"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -92,6 +110,28 @@ namespace Player
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6f88a314-872d-4e03-8c8a-f5f1775a261e"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Aim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""539037ae-4a5e-44b7-ae7d-bc50f935e09d"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Throw"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -119,6 +159,8 @@ namespace Player
             m_Dino = asset.FindActionMap("Dino", throwIfNotFound: true);
             m_Dino_Move = m_Dino.FindAction("Move", throwIfNotFound: true);
             m_Dino_Jump = m_Dino.FindAction("Jump", throwIfNotFound: true);
+            m_Dino_Aim = m_Dino.FindAction("Aim", throwIfNotFound: true);
+            m_Dino_Throw = m_Dino.FindAction("Throw", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -180,12 +222,16 @@ namespace Player
         private IDinoActions m_DinoActionsCallbackInterface;
         private readonly InputAction m_Dino_Move;
         private readonly InputAction m_Dino_Jump;
+        private readonly InputAction m_Dino_Aim;
+        private readonly InputAction m_Dino_Throw;
         public struct DinoActions
         {
             private @PlayerControls m_Wrapper;
             public DinoActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
             public InputAction @Move => m_Wrapper.m_Dino_Move;
             public InputAction @Jump => m_Wrapper.m_Dino_Jump;
+            public InputAction @Aim => m_Wrapper.m_Dino_Aim;
+            public InputAction @Throw => m_Wrapper.m_Dino_Throw;
             public InputActionMap Get() { return m_Wrapper.m_Dino; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -201,6 +247,12 @@ namespace Player
                     @Jump.started -= m_Wrapper.m_DinoActionsCallbackInterface.OnJump;
                     @Jump.performed -= m_Wrapper.m_DinoActionsCallbackInterface.OnJump;
                     @Jump.canceled -= m_Wrapper.m_DinoActionsCallbackInterface.OnJump;
+                    @Aim.started -= m_Wrapper.m_DinoActionsCallbackInterface.OnAim;
+                    @Aim.performed -= m_Wrapper.m_DinoActionsCallbackInterface.OnAim;
+                    @Aim.canceled -= m_Wrapper.m_DinoActionsCallbackInterface.OnAim;
+                    @Throw.started -= m_Wrapper.m_DinoActionsCallbackInterface.OnThrow;
+                    @Throw.performed -= m_Wrapper.m_DinoActionsCallbackInterface.OnThrow;
+                    @Throw.canceled -= m_Wrapper.m_DinoActionsCallbackInterface.OnThrow;
                 }
                 m_Wrapper.m_DinoActionsCallbackInterface = instance;
                 if (instance != null)
@@ -211,6 +263,12 @@ namespace Player
                     @Jump.started += instance.OnJump;
                     @Jump.performed += instance.OnJump;
                     @Jump.canceled += instance.OnJump;
+                    @Aim.started += instance.OnAim;
+                    @Aim.performed += instance.OnAim;
+                    @Aim.canceled += instance.OnAim;
+                    @Throw.started += instance.OnThrow;
+                    @Throw.performed += instance.OnThrow;
+                    @Throw.canceled += instance.OnThrow;
                 }
             }
         }
@@ -228,6 +286,8 @@ namespace Player
         {
             void OnMove(InputAction.CallbackContext context);
             void OnJump(InputAction.CallbackContext context);
+            void OnAim(InputAction.CallbackContext context);
+            void OnThrow(InputAction.CallbackContext context);
         }
     }
 }
