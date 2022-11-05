@@ -49,7 +49,8 @@ namespace Player {
         // first check for the jump functionality, then update on X axis
         private void ApplyVelocity() {
             if (_jumpPressed && IsGrounded()) {
-                _rb.velocity = new Vector2(_rb.velocity.x, _rb.velocity.y + jumpForce);
+                var velocity = _rb.velocity;
+                _rb.velocity = new Vector2(velocity.x, velocity.y + jumpForce);
             }
 
             _rb.velocity = new Vector2(_input * speed, _rb.velocity.y);
@@ -76,7 +77,6 @@ namespace Player {
         private void Aim() {
             var points = _controls.Dino.Aim.ReadValue<Vector2>();
             aimVector = _mainCam.ScreenToWorldPoint(points);
-            Debug.Log(aimVector);
         }
 
         private void Jump(InputAction.CallbackContext ctx) {
@@ -108,7 +108,7 @@ namespace Player {
         }
 
         private void UpdateAnimationState() {
-            if ((_rb.velocity.x < 0f || _rb.velocity.x > 0f) && IsGrounded()) {
+            if (_rb.velocity.x is < 0f or > 0f && IsGrounded()) {
                 _animState = DinoAnimState.running;
             } else if (_rb.velocity.y > 0f && !IsGrounded()) {
                 _animState = DinoAnimState.jumping;
