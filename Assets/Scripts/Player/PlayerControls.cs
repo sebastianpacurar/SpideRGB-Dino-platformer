@@ -64,6 +64,33 @@ namespace Player
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Red"",
+                    ""type"": ""Button"",
+                    ""id"": ""70d4def4-584f-4fd7-b202-7d4bfb3a5f36"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Green"",
+                    ""type"": ""Button"",
+                    ""id"": ""92d8fd82-23c4-470c-aa27-e093f9938be3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Blue"",
+                    ""type"": ""Button"",
+                    ""id"": ""720fcb33-b6e1-49a1-84db-591111a4d1fd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -132,6 +159,39 @@ namespace Player
                     ""action"": ""Throw"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""58ef6186-2c8f-43e4-b2b0-087c25a1a99f"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Red"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fdf51e6a-f132-45de-8332-595e7bd67ee6"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Green"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""85051ca7-eded-4842-8db6-df14020c4289"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Blue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -161,6 +221,9 @@ namespace Player
             m_Dino_Jump = m_Dino.FindAction("Jump", throwIfNotFound: true);
             m_Dino_Aim = m_Dino.FindAction("Aim", throwIfNotFound: true);
             m_Dino_Throw = m_Dino.FindAction("Throw", throwIfNotFound: true);
+            m_Dino_Red = m_Dino.FindAction("Red", throwIfNotFound: true);
+            m_Dino_Green = m_Dino.FindAction("Green", throwIfNotFound: true);
+            m_Dino_Blue = m_Dino.FindAction("Blue", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -224,6 +287,9 @@ namespace Player
         private readonly InputAction m_Dino_Jump;
         private readonly InputAction m_Dino_Aim;
         private readonly InputAction m_Dino_Throw;
+        private readonly InputAction m_Dino_Red;
+        private readonly InputAction m_Dino_Green;
+        private readonly InputAction m_Dino_Blue;
         public struct DinoActions
         {
             private @PlayerControls m_Wrapper;
@@ -232,6 +298,9 @@ namespace Player
             public InputAction @Jump => m_Wrapper.m_Dino_Jump;
             public InputAction @Aim => m_Wrapper.m_Dino_Aim;
             public InputAction @Throw => m_Wrapper.m_Dino_Throw;
+            public InputAction @Red => m_Wrapper.m_Dino_Red;
+            public InputAction @Green => m_Wrapper.m_Dino_Green;
+            public InputAction @Blue => m_Wrapper.m_Dino_Blue;
             public InputActionMap Get() { return m_Wrapper.m_Dino; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -253,6 +322,15 @@ namespace Player
                     @Throw.started -= m_Wrapper.m_DinoActionsCallbackInterface.OnThrow;
                     @Throw.performed -= m_Wrapper.m_DinoActionsCallbackInterface.OnThrow;
                     @Throw.canceled -= m_Wrapper.m_DinoActionsCallbackInterface.OnThrow;
+                    @Red.started -= m_Wrapper.m_DinoActionsCallbackInterface.OnRed;
+                    @Red.performed -= m_Wrapper.m_DinoActionsCallbackInterface.OnRed;
+                    @Red.canceled -= m_Wrapper.m_DinoActionsCallbackInterface.OnRed;
+                    @Green.started -= m_Wrapper.m_DinoActionsCallbackInterface.OnGreen;
+                    @Green.performed -= m_Wrapper.m_DinoActionsCallbackInterface.OnGreen;
+                    @Green.canceled -= m_Wrapper.m_DinoActionsCallbackInterface.OnGreen;
+                    @Blue.started -= m_Wrapper.m_DinoActionsCallbackInterface.OnBlue;
+                    @Blue.performed -= m_Wrapper.m_DinoActionsCallbackInterface.OnBlue;
+                    @Blue.canceled -= m_Wrapper.m_DinoActionsCallbackInterface.OnBlue;
                 }
                 m_Wrapper.m_DinoActionsCallbackInterface = instance;
                 if (instance != null)
@@ -269,6 +347,15 @@ namespace Player
                     @Throw.started += instance.OnThrow;
                     @Throw.performed += instance.OnThrow;
                     @Throw.canceled += instance.OnThrow;
+                    @Red.started += instance.OnRed;
+                    @Red.performed += instance.OnRed;
+                    @Red.canceled += instance.OnRed;
+                    @Green.started += instance.OnGreen;
+                    @Green.performed += instance.OnGreen;
+                    @Green.canceled += instance.OnGreen;
+                    @Blue.started += instance.OnBlue;
+                    @Blue.performed += instance.OnBlue;
+                    @Blue.canceled += instance.OnBlue;
                 }
             }
         }
@@ -288,6 +375,9 @@ namespace Player
             void OnJump(InputAction.CallbackContext context);
             void OnAim(InputAction.CallbackContext context);
             void OnThrow(InputAction.CallbackContext context);
+            void OnRed(InputAction.CallbackContext context);
+            void OnGreen(InputAction.CallbackContext context);
+            void OnBlue(InputAction.CallbackContext context);
         }
     }
 }

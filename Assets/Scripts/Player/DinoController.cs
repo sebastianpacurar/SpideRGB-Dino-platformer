@@ -15,18 +15,20 @@ namespace Player {
         [SerializeField] private Transform groundedPos;
         [SerializeField] private SpriteRenderer shadowSprite;
 
-        [SerializeField] private float speed = 2f;
-        [SerializeField] private float jumpForce = 5f;
+        [SerializeField] private float speed = 10f;
+        [SerializeField] private float jumpForce = 10f;
 
         private Rigidbody2D _rb;
         private SpriteRenderer _sr;
         private Animator _animator;
         private Camera _mainCam;
+        private ParticleSystem _ps;
 
         private void Awake() {
             _controls = new PlayerControls();
             _rb = GetComponent<Rigidbody2D>();
             _sr = GetComponent<SpriteRenderer>();
+            _ps = transform.GetChild(0).GetComponent<ParticleSystem>();
 
             _animator = GetComponent<Animator>();
             _mainCam = Camera.main;
@@ -35,6 +37,7 @@ namespace Player {
 
         private void Update() {
             Move();
+            CreateTrail();
             Aim();
             UpdateCameraPos();
         }
@@ -48,12 +51,23 @@ namespace Player {
 
         // first check for the jump functionality, then update on X axis
         private void ApplyVelocity() {
-            if (_jumpPressed && IsGrounded()) {
+            if (_jumpPressed) {
                 var velocity = _rb.velocity;
                 _rb.velocity = new Vector2(velocity.x, velocity.y + jumpForce);
+                _jumpPressed = false;
             }
 
             _rb.velocity = new Vector2(_input * speed, _rb.velocity.y);
+        }
+
+        private void CreateTrail() {
+            if (_input != 0 && IsGrounded()) {
+                _ps.Play();
+            } else {
+                if (_ps.isPlaying) {
+                    _ps.Stop();
+                }
+            }
         }
 
         private void UpdateCameraPos() {
@@ -67,7 +81,7 @@ namespace Player {
         }
 
         private bool IsGrounded() {
-            return Physics2D.OverlapCapsule(groundedPos.position, new Vector2(0.5f, 0.2f), CapsuleDirection2D.Horizontal, 0, groundLayer);
+            return Physics2D.OverlapCapsule(groundedPos.position, new Vector2(0.5f, 0.1f), CapsuleDirection2D.Horizontal, 0, groundLayer);
         }
 
         private void Move() {
@@ -83,10 +97,9 @@ namespace Player {
             switch (ctx.phase) {
                 case InputActionPhase.Started:
                 case InputActionPhase.Performed:
-                    _jumpPressed = true;
-                    break;
-                case InputActionPhase.Canceled:
-                    _jumpPressed = false;
+                    if (IsGrounded()) {
+                        _jumpPressed = true;
+                    }
                     break;
             }
         }
@@ -96,12 +109,10 @@ namespace Player {
             _controls.Dino.Jump.Enable();
             _controls.Dino.Aim.Enable();
             _controls.Dino.Jump.performed += Jump;
-            _controls.Dino.Jump.canceled += Jump;
         }
 
         private void OnDisable() {
             _controls.Dino.Jump.performed -= Jump;
-            _controls.Dino.Jump.canceled -= Jump;
             _controls.Dino.Aim.Disable();
             _controls.Dino.Jump.Disable();
             _controls.Dino.Move.Disable();
