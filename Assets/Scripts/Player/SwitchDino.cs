@@ -1,3 +1,4 @@
+using Platforms;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,6 +8,7 @@ namespace Player {
         private Animator _animator;
         private PlayerControls _playerControls;
         private string _dinoType = "Green";
+        private ParticleBurst _parentScript;
 
         private void Awake() {
             _playerControls = new PlayerControls();
@@ -14,6 +16,8 @@ namespace Player {
         }
 
         private void SetDino(string changeTo) {
+            var parent = gameObject.transform.parent;
+
             foreach (var controller in overrideControllers) {
                 var controllerName = controller.name.Split("-");
 
@@ -23,6 +27,14 @@ namespace Player {
 
                     _dinoType = changeTo;
                     break;
+                }
+            }
+
+            // destroy the platform if dino color doesn't match the platform color when swapping while grounded 
+            if (parent) {
+                if (!parent.name.Split(" ")[0].Equals(_dinoType)) {
+                    _parentScript = parent.GetComponent<ParticleBurst>();
+                    _parentScript.DestroyPlatform();
                 }
             }
         }
