@@ -34,6 +34,10 @@ namespace Player {
             _mainCam = Camera.main;
         }
 
+        private void Start() {
+            name = $"{GetComponent<SwitchDino>().DinoType} Dino";
+        }
+
 
         private void Update() {
             Move();

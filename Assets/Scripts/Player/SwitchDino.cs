@@ -4,10 +4,14 @@ using UnityEngine.InputSystem;
 
 namespace Player {
     public class SwitchDino : MonoBehaviour {
+        public string DinoType => _dinoType;
+
+        // defaults to Green
+        private string _dinoType = Rgb.Green.ToString();
+
         [SerializeField] private AnimatorOverrideController[] overrideControllers;
         private Animator _animator;
         private PlayerControls _playerControls;
-        private string _dinoType = "Green";
         private ParticleBurst _parentScript;
 
         private void Awake() {
@@ -30,9 +34,9 @@ namespace Player {
                 }
             }
 
-            // destroy the platform if dino color doesn't match the platform color when swapping while grounded 
+            // destroy the platform if dino color doesn't match the platform tag when swapping while grounded 
             if (parent) {
-                if (!parent.name.Split(" ")[0].Equals(_dinoType)) {
+                if (!parent.CompareTag(_dinoType)) {
                     _parentScript = parent.GetComponent<ParticleBurst>();
                     _parentScript.DestroyPlatform();
                 }
@@ -40,15 +44,15 @@ namespace Player {
         }
 
         private void GetRed(InputAction.CallbackContext ctx) {
-            SetDino("Red");
+            SetDino(Rgb.Red.ToString());
         }
 
         private void GetGreen(InputAction.CallbackContext ctx) {
-            SetDino("Green");
+            SetDino(Rgb.Green.ToString());
         }
 
         private void GetBlue(InputAction.CallbackContext ctx) {
-            SetDino("Blue");
+            SetDino(Rgb.Blue.ToString());
         }
 
         private void OnEnable() {
