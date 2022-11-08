@@ -28,16 +28,15 @@ namespace Player {
             _controls = new PlayerControls();
             _rb = GetComponent<Rigidbody2D>();
             _sr = GetComponent<SpriteRenderer>();
-            _ps = transform.GetChild(0).GetComponent<ParticleSystem>();
 
             _animator = GetComponent<Animator>();
             _mainCam = Camera.main;
         }
 
         private void Start() {
+            _ps = transform.GetChild(0).GetComponent<ParticleSystem>();
             name = $"{GetComponent<SwitchDino>().DinoType} Dino";
         }
-
 
         private void Update() {
             Move();
@@ -104,6 +103,7 @@ namespace Player {
                     if (IsGrounded()) {
                         _jumpPressed = true;
                     }
+
                     break;
             }
         }
@@ -137,10 +137,16 @@ namespace Player {
         }
 
         private void FlipDino() {
-            if (_rb.velocity.x < 0f) {
-                _sr.flipX = true;
-            } else if (_rb.velocity.x > 0f) {
-                _sr.flipX = false;
+            var velocityOverLifetimeModule = _ps.velocityOverLifetime;
+            switch (_rb.velocity.x) {
+                case < 0f:
+                    _sr.flipX = true;
+                    velocityOverLifetimeModule.x = 0.1f;
+                    break;
+                case > 0f:
+                    velocityOverLifetimeModule.x = -0.1f;
+                    _sr.flipX = false;
+                    break;
             }
         }
     }

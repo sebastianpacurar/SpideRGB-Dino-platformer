@@ -17,7 +17,7 @@ namespace Platforms {
         private void OnCollisionEnter2D(Collision2D col) {
             if (col.gameObject.CompareTag("Player")) {
                 var dino = col.gameObject;
-                if (dino.name.Split(" ")[0] == _platformType) {
+                if (dino.name.Split(" ")[0].Equals(_platformType)) {
                     dino.transform.SetParent(transform);
                 } else {
                     DestroyPlatform();

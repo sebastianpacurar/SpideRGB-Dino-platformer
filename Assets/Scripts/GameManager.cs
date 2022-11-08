@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -25,7 +23,7 @@ public class GameManager : MonoBehaviour {
     }
 
     private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
-        if (scene.name == "LevelOne") {
+        if (scene.name.Equals("LevelOne")) {
             Instantiate(dino);
         }
     }
