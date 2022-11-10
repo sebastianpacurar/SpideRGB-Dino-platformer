@@ -22,51 +22,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "Aim",
-                    "type": "Value",
-                    "id": "30d2003e-c665-4864-9da1-0ececcb135df",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "Throw",
-                    "type": "Button",
-                    "id": "b1c16e4c-17cc-4f4a-b3b7-fe3a984a18ab",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Red",
-                    "type": "Button",
-                    "id": "70d4def4-584f-4fd7-b202-7d4bfb3a5f36",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Green",
-                    "type": "Button",
-                    "id": "92d8fd82-23c4-470c-aa27-e093f9938be3",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Blue",
-                    "type": "Button",
-                    "id": "720fcb33-b6e1-49a1-84db-591111a4d1fd",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -113,43 +68,56 @@
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
-                },
+                }
+            ]
+        },
+        {
+            "name": "Menu",
+            "id": "9a523d81-e8df-4e78-b409-5884adde71cb",
+            "actions": [
                 {
-                    "name": "",
-                    "id": "6f88a314-872d-4e03-8c8a-f5f1775a261e",
-                    "path": "<Mouse>/position",
-                    "interactions": "",
+                    "name": "Blue",
+                    "type": "Button",
+                    "id": "30fe1977-3317-4b4e-ba6b-34be447c8dc2",
+                    "expectedControlType": "Button",
                     "processors": "",
-                    "groups": "",
-                    "action": "Aim",
-                    "isComposite": false,
-                    "isPartOfComposite": false
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
+                    "name": "Green",
+                    "type": "Button",
+                    "id": "651f74ea-d264-46ed-8e4f-c59d18c75fa3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Red",
+                    "type": "Button",
+                    "id": "57a8b31c-1971-411d-9b82-a27702cfd5d9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
                     "name": "",
-                    "id": "539037ae-4a5e-44b7-ae7d-bc50f935e09d",
-                    "path": "<Mouse>/leftButton",
+                    "id": "91d47c90-e3eb-4570-a982-ef6e686cfa53",
+                    "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Throw",
+                    "action": "Blue",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "58ef6186-2c8f-43e4-b2b0-087c25a1a99f",
-                    "path": "<Keyboard>/q",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Red",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "fdf51e6a-f132-45de-8332-595e7bd67ee6",
+                    "id": "7655de22-d061-4fcb-adcc-55f6cdcaff69",
                     "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
@@ -160,12 +128,12 @@
                 },
                 {
                     "name": "",
-                    "id": "85051ca7-eded-4842-8db6-df14020c4289",
-                    "path": "<Keyboard>/w",
+                    "id": "5a1dd56a-7501-429b-a512-6f8efe1c3870",
+                    "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Blue",
+                    "action": "Red",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

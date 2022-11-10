@@ -88,21 +88,21 @@ namespace Player {
         }
 
         private void OnEnable() {
-            _playerControls.Dino.Red.Enable();
-            _playerControls.Dino.Green.Enable();
-            _playerControls.Dino.Blue.Enable();
-            _playerControls.Dino.Blue.performed += GetBlue;
-            _playerControls.Dino.Red.performed += GetRed;
-            _playerControls.Dino.Green.performed += GetGreen;
+            _playerControls.Menu.Red.Enable();
+            _playerControls.Menu.Green.Enable();
+            _playerControls.Menu.Blue.Enable();
+            _playerControls.Menu.Blue.performed += GetBlue;
+            _playerControls.Menu.Red.performed += GetRed;
+            _playerControls.Menu.Green.performed += GetGreen;
         }
 
         private void OnDisable() {
-            _playerControls.Dino.Red.performed -= GetRed;
-            _playerControls.Dino.Green.performed -= GetGreen;
-            _playerControls.Dino.Blue.performed -= GetBlue;
-            _playerControls.Dino.Blue.Disable();
-            _playerControls.Dino.Red.Disable();
-            _playerControls.Dino.Green.Disable();
+            _playerControls.Menu.Red.performed -= GetRed;
+            _playerControls.Menu.Green.performed -= GetGreen;
+            _playerControls.Menu.Blue.performed -= GetBlue;
+            _playerControls.Menu.Blue.Disable();
+            _playerControls.Menu.Red.Disable();
+            _playerControls.Menu.Green.Disable();
         }
     }
 }

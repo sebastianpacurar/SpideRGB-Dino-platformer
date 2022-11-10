@@ -1,3 +1,4 @@
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,8 +10,6 @@ namespace Player {
         private float _input;
         private bool _jumpPressed;
 
-        [SerializeField] private Vector2 aimVector;
-
         [SerializeField] private LayerMask groundLayer;
         [SerializeField] private Transform groundedPos;
         [SerializeField] private SpriteRenderer shadowSprite;
@@ -21,19 +20,19 @@ namespace Player {
         private Rigidbody2D _rb;
         private SpriteRenderer _sr;
         private Animator _animator;
-        private Camera _mainCam;
+        private CinemachineVirtualCamera _cineMachineCam;
         private ParticleSystem _ps;
 
         private void Awake() {
             _controls = new PlayerControls();
             _rb = GetComponent<Rigidbody2D>();
             _sr = GetComponent<SpriteRenderer>();
-
             _animator = GetComponent<Animator>();
-            _mainCam = Camera.main;
         }
 
         private void Start() {
+            _cineMachineCam = GameObject.FindGameObjectWithTag("CM2D").GetComponent<CinemachineVirtualCamera>();
+            _cineMachineCam.Follow = transform;
             _ps = transform.GetChild(0).GetComponent<ParticleSystem>();
             name = $"{GetComponent<SwitchDino>().DinoType} Dino";
         }
@@ -41,8 +40,6 @@ namespace Player {
         private void Update() {
             Move();
             CreateTrail();
-            Aim();
-            UpdateCameraPos();
         }
 
         private void FixedUpdate() {
@@ -73,12 +70,6 @@ namespace Player {
             }
         }
 
-        private void UpdateCameraPos() {
-            var dinoPos = transform.position;
-            var cam = _mainCam.transform;
-            cam.position = new Vector3(dinoPos.x, dinoPos.y, cam.position.z);
-        }
-
         private void UpdateDinoShadow() {
             shadowSprite.enabled = IsGrounded();
         }
@@ -91,10 +82,6 @@ namespace Player {
             _input = _controls.Dino.Move.ReadValue<float>();
         }
 
-        private void Aim() {
-            var points = _controls.Dino.Aim.ReadValue<Vector2>();
-            aimVector = _mainCam.ScreenToWorldPoint(points);
-        }
 
         private void Jump(InputAction.CallbackContext ctx) {
             switch (ctx.phase) {
@@ -111,13 +98,11 @@ namespace Player {
         private void OnEnable() {
             _controls.Dino.Move.Enable();
             _controls.Dino.Jump.Enable();
-            _controls.Dino.Aim.Enable();
             _controls.Dino.Jump.performed += Jump;
         }
 
         private void OnDisable() {
             _controls.Dino.Jump.performed -= Jump;
-            _controls.Dino.Aim.Disable();
             _controls.Dino.Jump.Disable();
             _controls.Dino.Move.Disable();
         }
