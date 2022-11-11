@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Platforms {
-    public class GrappleNode : MonoBehaviour, IPointerDownHandler {
+    public class GrappleNode : MonoBehaviour, IPointerDownHandler, IPointerUpHandler {
         private GameObject _dino;
         private GrappleLogic _dinoGrappleScript;
 
@@ -16,8 +16,8 @@ namespace Platforms {
             _dinoGrappleScript.SelectNode(this);
         }
 
-        // public void OnPointerUp(PointerEventData eventData) {
-        //     _dinoGrappleScript.DeselectNode();
-        // }
+        public void OnPointerUp(PointerEventData eventData) {
+            _dinoGrappleScript.DeselectNode();
+        }
     }
 }

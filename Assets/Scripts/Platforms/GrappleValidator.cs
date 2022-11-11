@@ -11,7 +11,7 @@ namespace Platforms {
             _grappleNodeObject = transform.GetChild(1).gameObject;
         }
 
-        private void OnTriggerStay2D(Collider2D col) {
+        private void OnTriggerEnter2D(Collider2D col) {
             if (col.gameObject.CompareTag("GrappleArea")) {
                 _grappleNodeObject.SetActive(true);
             }
@@ -19,12 +19,14 @@ namespace Platforms {
 
         private void OnTriggerExit2D(Collider2D col) {
             if (col.gameObject.CompareTag("GrappleArea")) {
-                if (_dinoGrappleScript.SelectedNodeRb) {
+                // when the dino swings over (above) the platform, then deselect the node before disabling the object
+                // prevent deselection in case another platform exits the area
+                if (_dinoGrappleScript.SelectedPlatformName.Equals(name)) {
                     _dinoGrappleScript.DeselectNode();
                 }
-            }
 
-            _grappleNodeObject.SetActive(false);
+                _grappleNodeObject.SetActive(false);
+            }
         }
     }
 }

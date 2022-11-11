@@ -10,6 +10,7 @@ TagManager:
   - Swap
   - CM2D
   - GrappleArea
+  - SwingArea
   layers:
   - Default
   - TransparentFX

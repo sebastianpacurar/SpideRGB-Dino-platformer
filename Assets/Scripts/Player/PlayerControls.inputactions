@@ -22,6 +22,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Pull",
+                    "type": "Button",
+                    "id": "fdbd8b38-a34f-4ee8-acd5-cb33f689e27a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Push",
+                    "type": "Button",
+                    "id": "f30ec4e5-8000-49f1-97ef-7593ac6b8989",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -68,6 +86,28 @@
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "be222aa5-312b-4565-a377-5b7d64e0e92b",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Pull",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fe2a8ad5-dbb6-4809-89d8-8831e7b62d8e",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Push",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -76,9 +116,9 @@
             "id": "9a523d81-e8df-4e78-b409-5884adde71cb",
             "actions": [
                 {
-                    "name": "Blue",
+                    "name": "Red",
                     "type": "Button",
-                    "id": "30fe1977-3317-4b4e-ba6b-34be447c8dc2",
+                    "id": "57a8b31c-1971-411d-9b82-a27702cfd5d9",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -94,9 +134,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Red",
+                    "name": "Blue",
                     "type": "Button",
-                    "id": "57a8b31c-1971-411d-9b82-a27702cfd5d9",
+                    "id": "30fe1977-3317-4b4e-ba6b-34be447c8dc2",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -106,19 +146,8 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "91d47c90-e3eb-4570-a982-ef6e686cfa53",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Blue",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "7655de22-d061-4fcb-adcc-55f6cdcaff69",
-                    "path": "<Keyboard>/e",
+                    "path": "<Keyboard>/3",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -129,11 +158,22 @@
                 {
                     "name": "",
                     "id": "5a1dd56a-7501-429b-a512-6f8efe1c3870",
-                    "path": "<Keyboard>/q",
+                    "path": "<Keyboard>/1",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Red",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "91d47c90-e3eb-4570-a982-ef6e686cfa53",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Blue",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

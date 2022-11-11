@@ -46,6 +46,24 @@ namespace Player
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pull"",
+                    ""type"": ""Button"",
+                    ""id"": ""fdbd8b38-a34f-4ee8-acd5-cb33f689e27a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Push"",
+                    ""type"": ""Button"",
+                    ""id"": ""f30ec4e5-8000-49f1-97ef-7593ac6b8989"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -92,6 +110,28 @@ namespace Player
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""be222aa5-312b-4565-a377-5b7d64e0e92b"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Pull"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fe2a8ad5-dbb6-4809-89d8-8831e7b62d8e"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Push"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -100,9 +140,9 @@ namespace Player
             ""id"": ""9a523d81-e8df-4e78-b409-5884adde71cb"",
             ""actions"": [
                 {
-                    ""name"": ""Blue"",
+                    ""name"": ""Red"",
                     ""type"": ""Button"",
-                    ""id"": ""30fe1977-3317-4b4e-ba6b-34be447c8dc2"",
+                    ""id"": ""57a8b31c-1971-411d-9b82-a27702cfd5d9"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -118,9 +158,9 @@ namespace Player
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Red"",
+                    ""name"": ""Blue"",
                     ""type"": ""Button"",
-                    ""id"": ""57a8b31c-1971-411d-9b82-a27702cfd5d9"",
+                    ""id"": ""30fe1977-3317-4b4e-ba6b-34be447c8dc2"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -130,19 +170,8 @@ namespace Player
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""91d47c90-e3eb-4570-a982-ef6e686cfa53"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Blue"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""7655de22-d061-4fcb-adcc-55f6cdcaff69"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Keyboard>/3"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
@@ -153,11 +182,22 @@ namespace Player
                 {
                     ""name"": """",
                     ""id"": ""5a1dd56a-7501-429b-a512-6f8efe1c3870"",
-                    ""path"": ""<Keyboard>/q"",
+                    ""path"": ""<Keyboard>/1"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Red"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""91d47c90-e3eb-4570-a982-ef6e686cfa53"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Blue"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -187,11 +227,13 @@ namespace Player
             m_Dino = asset.FindActionMap("Dino", throwIfNotFound: true);
             m_Dino_Move = m_Dino.FindAction("Move", throwIfNotFound: true);
             m_Dino_Jump = m_Dino.FindAction("Jump", throwIfNotFound: true);
+            m_Dino_Pull = m_Dino.FindAction("Pull", throwIfNotFound: true);
+            m_Dino_Push = m_Dino.FindAction("Push", throwIfNotFound: true);
             // Menu
             m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
-            m_Menu_Blue = m_Menu.FindAction("Blue", throwIfNotFound: true);
-            m_Menu_Green = m_Menu.FindAction("Green", throwIfNotFound: true);
             m_Menu_Red = m_Menu.FindAction("Red", throwIfNotFound: true);
+            m_Menu_Green = m_Menu.FindAction("Green", throwIfNotFound: true);
+            m_Menu_Blue = m_Menu.FindAction("Blue", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -253,12 +295,16 @@ namespace Player
         private IDinoActions m_DinoActionsCallbackInterface;
         private readonly InputAction m_Dino_Move;
         private readonly InputAction m_Dino_Jump;
+        private readonly InputAction m_Dino_Pull;
+        private readonly InputAction m_Dino_Push;
         public struct DinoActions
         {
             private @PlayerControls m_Wrapper;
             public DinoActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
             public InputAction @Move => m_Wrapper.m_Dino_Move;
             public InputAction @Jump => m_Wrapper.m_Dino_Jump;
+            public InputAction @Pull => m_Wrapper.m_Dino_Pull;
+            public InputAction @Push => m_Wrapper.m_Dino_Push;
             public InputActionMap Get() { return m_Wrapper.m_Dino; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -274,6 +320,12 @@ namespace Player
                     @Jump.started -= m_Wrapper.m_DinoActionsCallbackInterface.OnJump;
                     @Jump.performed -= m_Wrapper.m_DinoActionsCallbackInterface.OnJump;
                     @Jump.canceled -= m_Wrapper.m_DinoActionsCallbackInterface.OnJump;
+                    @Pull.started -= m_Wrapper.m_DinoActionsCallbackInterface.OnPull;
+                    @Pull.performed -= m_Wrapper.m_DinoActionsCallbackInterface.OnPull;
+                    @Pull.canceled -= m_Wrapper.m_DinoActionsCallbackInterface.OnPull;
+                    @Push.started -= m_Wrapper.m_DinoActionsCallbackInterface.OnPush;
+                    @Push.performed -= m_Wrapper.m_DinoActionsCallbackInterface.OnPush;
+                    @Push.canceled -= m_Wrapper.m_DinoActionsCallbackInterface.OnPush;
                 }
                 m_Wrapper.m_DinoActionsCallbackInterface = instance;
                 if (instance != null)
@@ -284,6 +336,12 @@ namespace Player
                     @Jump.started += instance.OnJump;
                     @Jump.performed += instance.OnJump;
                     @Jump.canceled += instance.OnJump;
+                    @Pull.started += instance.OnPull;
+                    @Pull.performed += instance.OnPull;
+                    @Pull.canceled += instance.OnPull;
+                    @Push.started += instance.OnPush;
+                    @Push.performed += instance.OnPush;
+                    @Push.canceled += instance.OnPush;
                 }
             }
         }
@@ -292,16 +350,16 @@ namespace Player
         // Menu
         private readonly InputActionMap m_Menu;
         private IMenuActions m_MenuActionsCallbackInterface;
-        private readonly InputAction m_Menu_Blue;
-        private readonly InputAction m_Menu_Green;
         private readonly InputAction m_Menu_Red;
+        private readonly InputAction m_Menu_Green;
+        private readonly InputAction m_Menu_Blue;
         public struct MenuActions
         {
             private @PlayerControls m_Wrapper;
             public MenuActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
-            public InputAction @Blue => m_Wrapper.m_Menu_Blue;
-            public InputAction @Green => m_Wrapper.m_Menu_Green;
             public InputAction @Red => m_Wrapper.m_Menu_Red;
+            public InputAction @Green => m_Wrapper.m_Menu_Green;
+            public InputAction @Blue => m_Wrapper.m_Menu_Blue;
             public InputActionMap Get() { return m_Wrapper.m_Menu; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -311,28 +369,28 @@ namespace Player
             {
                 if (m_Wrapper.m_MenuActionsCallbackInterface != null)
                 {
-                    @Blue.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnBlue;
-                    @Blue.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnBlue;
-                    @Blue.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnBlue;
-                    @Green.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnGreen;
-                    @Green.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnGreen;
-                    @Green.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnGreen;
                     @Red.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnRed;
                     @Red.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnRed;
                     @Red.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnRed;
+                    @Green.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnGreen;
+                    @Green.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnGreen;
+                    @Green.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnGreen;
+                    @Blue.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnBlue;
+                    @Blue.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnBlue;
+                    @Blue.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnBlue;
                 }
                 m_Wrapper.m_MenuActionsCallbackInterface = instance;
                 if (instance != null)
                 {
-                    @Blue.started += instance.OnBlue;
-                    @Blue.performed += instance.OnBlue;
-                    @Blue.canceled += instance.OnBlue;
-                    @Green.started += instance.OnGreen;
-                    @Green.performed += instance.OnGreen;
-                    @Green.canceled += instance.OnGreen;
                     @Red.started += instance.OnRed;
                     @Red.performed += instance.OnRed;
                     @Red.canceled += instance.OnRed;
+                    @Green.started += instance.OnGreen;
+                    @Green.performed += instance.OnGreen;
+                    @Green.canceled += instance.OnGreen;
+                    @Blue.started += instance.OnBlue;
+                    @Blue.performed += instance.OnBlue;
+                    @Blue.canceled += instance.OnBlue;
                 }
             }
         }
@@ -350,12 +408,14 @@ namespace Player
         {
             void OnMove(InputAction.CallbackContext context);
             void OnJump(InputAction.CallbackContext context);
+            void OnPull(InputAction.CallbackContext context);
+            void OnPush(InputAction.CallbackContext context);
         }
         public interface IMenuActions
         {
-            void OnBlue(InputAction.CallbackContext context);
-            void OnGreen(InputAction.CallbackContext context);
             void OnRed(InputAction.CallbackContext context);
+            void OnGreen(InputAction.CallbackContext context);
+            void OnBlue(InputAction.CallbackContext context);
         }
     }
 }

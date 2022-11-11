@@ -59,15 +59,7 @@ namespace Player {
                 _jumpPressed = false;
             }
 
-            if (_springJoint2D.isActiveAndEnabled) {
-                if (_springJoint2D.attachedRigidbody.position.x < transform.position.x) {
-                    _rb.velocity = new Vector2(_input * speed, _rb.velocity.y);
-                } else {
-                    _rb.velocity = new Vector2(-_input * speed, _rb.velocity.y);
-                }
-            } else {
-                _rb.velocity = new Vector2(_input * speed, _rb.velocity.y);
-            }
+            _rb.velocity = new Vector2(_input * speed, _rb.velocity.y);
         }
 
         private void CreateTrail() {
@@ -91,8 +83,7 @@ namespace Player {
         private void Move() {
             _input = _controls.Dino.Move.ReadValue<float>();
         }
-
-
+        
         private void Jump(InputAction.CallbackContext ctx) {
             switch (ctx.phase) {
                 case InputActionPhase.Started:
