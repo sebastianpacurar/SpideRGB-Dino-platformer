@@ -83,7 +83,7 @@ namespace Player {
                 "Red" => new Color(1f, 0.5369426f, 0f, 1f),
                 "Green" => new Color(0.333f, 0.603f, 0f, 1f),
                 "Blue" => new Color(0f, 0.7545424f, 1, 1f),
-                _ => mainModule.startColor
+                _ => new Color(1f, 1f, 1f, 1f)
             };
         }
 

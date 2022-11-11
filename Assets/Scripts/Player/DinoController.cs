@@ -22,12 +22,14 @@ namespace Player {
         private Animator _animator;
         private CinemachineVirtualCamera _cineMachineCam;
         private ParticleSystem _ps;
+        private SpringJoint2D _springJoint2D;
 
         private void Awake() {
             _controls = new PlayerControls();
             _rb = GetComponent<Rigidbody2D>();
             _sr = GetComponent<SpriteRenderer>();
             _animator = GetComponent<Animator>();
+            _springJoint2D = GetComponent<SpringJoint2D>();
         }
 
         private void Start() {
@@ -57,7 +59,15 @@ namespace Player {
                 _jumpPressed = false;
             }
 
-            _rb.velocity = new Vector2(_input * speed, _rb.velocity.y);
+            if (_springJoint2D.isActiveAndEnabled) {
+                if (_springJoint2D.attachedRigidbody.position.x < transform.position.x) {
+                    _rb.velocity = new Vector2(_input * speed, _rb.velocity.y);
+                } else {
+                    _rb.velocity = new Vector2(-_input * speed, _rb.velocity.y);
+                }
+            } else {
+                _rb.velocity = new Vector2(_input * speed, _rb.velocity.y);
+            }
         }
 
         private void CreateTrail() {
