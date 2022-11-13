@@ -140,7 +140,7 @@ namespace Player
             ""id"": ""9a523d81-e8df-4e78-b409-5884adde71cb"",
             ""actions"": [
                 {
-                    ""name"": ""Red"",
+                    ""name"": ""Left"",
                     ""type"": ""Button"",
                     ""id"": ""57a8b31c-1971-411d-9b82-a27702cfd5d9"",
                     ""expectedControlType"": ""Button"",
@@ -149,16 +149,7 @@ namespace Player
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Green"",
-                    ""type"": ""Button"",
-                    ""id"": ""651f74ea-d264-46ed-8e4f-c59d18c75fa3"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Blue"",
+                    ""name"": ""Right"",
                     ""type"": ""Button"",
                     ""id"": ""30fe1977-3317-4b4e-ba6b-34be447c8dc2"",
                     ""expectedControlType"": ""Button"",
@@ -170,34 +161,23 @@ namespace Player
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""7655de22-d061-4fcb-adcc-55f6cdcaff69"",
-                    ""path"": ""<Keyboard>/3"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Green"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""5a1dd56a-7501-429b-a512-6f8efe1c3870"",
-                    ""path"": ""<Keyboard>/1"",
+                    ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Red"",
+                    ""action"": ""Left"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
                     ""id"": ""91d47c90-e3eb-4570-a982-ef6e686cfa53"",
-                    ""path"": ""<Keyboard>/2"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Blue"",
+                    ""action"": ""Right"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -231,9 +211,8 @@ namespace Player
             m_Dino_Push = m_Dino.FindAction("Push", throwIfNotFound: true);
             // Menu
             m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
-            m_Menu_Red = m_Menu.FindAction("Red", throwIfNotFound: true);
-            m_Menu_Green = m_Menu.FindAction("Green", throwIfNotFound: true);
-            m_Menu_Blue = m_Menu.FindAction("Blue", throwIfNotFound: true);
+            m_Menu_Left = m_Menu.FindAction("Left", throwIfNotFound: true);
+            m_Menu_Right = m_Menu.FindAction("Right", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -350,16 +329,14 @@ namespace Player
         // Menu
         private readonly InputActionMap m_Menu;
         private IMenuActions m_MenuActionsCallbackInterface;
-        private readonly InputAction m_Menu_Red;
-        private readonly InputAction m_Menu_Green;
-        private readonly InputAction m_Menu_Blue;
+        private readonly InputAction m_Menu_Left;
+        private readonly InputAction m_Menu_Right;
         public struct MenuActions
         {
             private @PlayerControls m_Wrapper;
             public MenuActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
-            public InputAction @Red => m_Wrapper.m_Menu_Red;
-            public InputAction @Green => m_Wrapper.m_Menu_Green;
-            public InputAction @Blue => m_Wrapper.m_Menu_Blue;
+            public InputAction @Left => m_Wrapper.m_Menu_Left;
+            public InputAction @Right => m_Wrapper.m_Menu_Right;
             public InputActionMap Get() { return m_Wrapper.m_Menu; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -369,28 +346,22 @@ namespace Player
             {
                 if (m_Wrapper.m_MenuActionsCallbackInterface != null)
                 {
-                    @Red.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnRed;
-                    @Red.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnRed;
-                    @Red.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnRed;
-                    @Green.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnGreen;
-                    @Green.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnGreen;
-                    @Green.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnGreen;
-                    @Blue.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnBlue;
-                    @Blue.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnBlue;
-                    @Blue.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnBlue;
+                    @Left.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnLeft;
+                    @Left.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnLeft;
+                    @Left.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnLeft;
+                    @Right.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnRight;
+                    @Right.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnRight;
+                    @Right.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnRight;
                 }
                 m_Wrapper.m_MenuActionsCallbackInterface = instance;
                 if (instance != null)
                 {
-                    @Red.started += instance.OnRed;
-                    @Red.performed += instance.OnRed;
-                    @Red.canceled += instance.OnRed;
-                    @Green.started += instance.OnGreen;
-                    @Green.performed += instance.OnGreen;
-                    @Green.canceled += instance.OnGreen;
-                    @Blue.started += instance.OnBlue;
-                    @Blue.performed += instance.OnBlue;
-                    @Blue.canceled += instance.OnBlue;
+                    @Left.started += instance.OnLeft;
+                    @Left.performed += instance.OnLeft;
+                    @Left.canceled += instance.OnLeft;
+                    @Right.started += instance.OnRight;
+                    @Right.performed += instance.OnRight;
+                    @Right.canceled += instance.OnRight;
                 }
             }
         }
@@ -413,9 +384,8 @@ namespace Player
         }
         public interface IMenuActions
         {
-            void OnRed(InputAction.CallbackContext context);
-            void OnGreen(InputAction.CallbackContext context);
-            void OnBlue(InputAction.CallbackContext context);
+            void OnLeft(InputAction.CallbackContext context);
+            void OnRight(InputAction.CallbackContext context);
         }
     }
 }

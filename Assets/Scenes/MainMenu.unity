@@ -500,6 +500,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dino: {fileID: 1300463051800894524, guid: 6b326ac4c41145a34ba162025e0234dd, type: 3}
+  dinoSwapPanel: {fileID: 1153211272705227577, guid: 057c3d1ea0b4b6e32bdc8c0f0ae5c07a, type: 3}
 --- !u!4 &1476691637
 Transform:
   m_ObjectHideFlags: 0

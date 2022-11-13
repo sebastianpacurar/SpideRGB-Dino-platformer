@@ -14,9 +14,8 @@ namespace Player {
         private Rigidbody2D _selectedNodeRb;
 
         // used to prevent OnTriggerExit to deselect node if another platform exits the BoxCollider area
-        public string SelectedPlatformName { get; private set; }
+        public string SelectedPlatformName { get; private set; } = string.Empty;
 
-        // 
         private bool _isPulling, _isPushing;
 
         private void Awake() {
@@ -29,6 +28,8 @@ namespace Player {
             _lineRenderer.startWidth = 0.2f;
             _lineRenderer.endWidth = 0.2f;
             _lineRenderer.enabled = false;
+            _lineRenderer.startColor = MyColor.Green;
+            _lineRenderer.endColor = MyColor.Green;
             _springJoint2D.enabled = false;
         }
 
@@ -70,7 +71,7 @@ namespace Player {
         // called in GrappleNode.cs upon OnPointerUp event
         public void DeselectNode() {
             _selectedNodeRb = null;
-            SelectedPlatformName = null;
+            SelectedPlatformName = string.Empty;
         }
 
         private void HandleGrapplingHook() {
@@ -89,12 +90,12 @@ namespace Player {
 
                 // Handle Pull Grapple update
                 if (_isPulling && _springJoint2D.distance >= 2f) {
-                    _springJoint2D.distance -= 0.1f;
+                    _springJoint2D.distance -= 0.2f;
                 }
 
                 // Handle Push Grapple update
                 if (_isPushing && _springJoint2D.distance <= 4.5f) {
-                    _springJoint2D.distance += 0.1f;
+                    _springJoint2D.distance += 0.2f;
                 }
 
                 if (_springJoint2D.distance >= 4.5f) {

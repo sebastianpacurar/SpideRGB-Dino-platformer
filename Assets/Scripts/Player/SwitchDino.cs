@@ -1,11 +1,12 @@
+using Menu;
+using Menu.InGameMenu.SwapDinoUi;
 using Platforms;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Player {
     public class SwitchDino : MonoBehaviour {
-        // defaults to Green
-        public string DinoType { get; private set; } = Rgb.Green.ToString();
+        public string DinoType { get; private set; } = "Green";
 
         private Animator _swapAnimator;
         private ParticleSystem _ps;
@@ -14,14 +15,21 @@ namespace Player {
         private Animator _animator;
         private PlayerControls _playerControls;
         private ParticleBurst _parentPlatform;
+        private LineRenderer _lineRenderer;
+
+        private SwitchTop _topUiContainer;
+        private SwitchBottom _bottomUiContainer;
 
         private void Awake() {
             _playerControls = new PlayerControls();
             _animator = GetComponent<Animator>();
+            _lineRenderer = GetComponent<LineRenderer>();
         }
 
         private void Start() {
             _ps = transform.GetChild(0).GetComponent<ParticleSystem>();
+            _topUiContainer = GameObject.FindGameObjectWithTag("TopDinoContainer").GetComponent<SwitchTop>();
+            _bottomUiContainer = GameObject.FindGameObjectWithTag("BottomDinoContainer").GetComponent<SwitchBottom>();
 
             var swapObj = GameObject.FindGameObjectWithTag("Swap");
             _swapAnimator = swapObj.GetComponent<Animator>();
@@ -54,55 +62,81 @@ namespace Player {
                     _parentPlatform.DestroyPlatform();
                 }
             }
+
+            SetGrappleLineColor();
         }
 
-        private void GetRed(InputAction.CallbackContext ctx) {
-            PerformSwap(Rgb.Red.ToString());
+        private void GetLeft(InputAction.CallbackContext ctx) {
+            var leftActive = _topUiContainer.GetLeftActiveColor();
+            UpdateDinoUiSwap(leftActive, "left");
+            PerformSwap(leftActive);
         }
 
-        private void GetGreen(InputAction.CallbackContext ctx) {
-            PerformSwap(Rgb.Green.ToString());
+        private void GetRight(InputAction.CallbackContext ctx) {
+            var rightActive = _topUiContainer.GetRightActiveColor();
+            UpdateDinoUiSwap(rightActive, "right");
+            PerformSwap(rightActive);
         }
 
-        private void GetBlue(InputAction.CallbackContext ctx) {
-            PerformSwap(Rgb.Blue.ToString());
+        // swap the colors between the current and new color. update arrows to point towards the right color.
+        private void UpdateDinoUiSwap(string newColor, string direction) {
+            _topUiContainer.Swap(DinoType, newColor, direction);
+            _bottomUiContainer.UpdateArrows();
         }
 
-        // prevent from calling swap animation on the same dino type (color)
         private void PerformSwap(string color) {
-            if (!DinoType.Equals(color)) {
+            if (!_swapAnimator.GetBool("active")) {
                 _swapAnimator.SetBool("active", true);
-                SetDino(color);
             }
+
+            SetDino(color);
         }
 
         // set the correct Particle System start color
         private void SetParticleColorStart() {
             var mainModule = _ps.main;
             mainModule.startColor = DinoType switch {
-                "Red" => new Color(1f, 0.5369426f, 0f, 1f),
-                "Green" => new Color(0.333f, 0.603f, 0f, 1f),
-                "Blue" => new Color(0f, 0.7545424f, 1, 1f),
-                _ => new Color(1f, 1f, 1f, 1f)
+                "Red" => MyColor.Red,
+                "Green" => MyColor.Green,
+                "Blue" => MyColor.Blue,
+                _ => MyColor.White
             };
         }
 
+        private void SetGrappleLineColor() {
+            switch (DinoType) {
+                case "Red":
+                    _lineRenderer.startColor = MyColor.Red;
+                    _lineRenderer.endColor = MyColor.Red;
+                    break;
+                case "Green":
+                    _lineRenderer.startColor = MyColor.Green;
+                    _lineRenderer.endColor = MyColor.Green;
+                    break;
+                case "Blue":
+                    _lineRenderer.startColor = MyColor.Blue;
+                    _lineRenderer.endColor = MyColor.Blue;
+                    break;
+                default:
+                    _lineRenderer.startColor = MyColor.White;
+                    _lineRenderer.endColor = MyColor.White;
+                    break;
+            }
+        }
+
         private void OnEnable() {
-            _playerControls.Menu.Red.Enable();
-            _playerControls.Menu.Green.Enable();
-            _playerControls.Menu.Blue.Enable();
-            _playerControls.Menu.Blue.performed += GetBlue;
-            _playerControls.Menu.Red.performed += GetRed;
-            _playerControls.Menu.Green.performed += GetGreen;
+            _playerControls.Menu.Left.Enable();
+            _playerControls.Menu.Right.Enable();
+            _playerControls.Menu.Left.performed += GetLeft;
+            _playerControls.Menu.Right.performed += GetRight;
         }
 
         private void OnDisable() {
-            _playerControls.Menu.Red.performed -= GetRed;
-            _playerControls.Menu.Green.performed -= GetGreen;
-            _playerControls.Menu.Blue.performed -= GetBlue;
-            _playerControls.Menu.Blue.Disable();
-            _playerControls.Menu.Red.Disable();
-            _playerControls.Menu.Green.Disable();
+            _playerControls.Menu.Left.performed -= GetLeft;
+            _playerControls.Menu.Right.performed -= GetRight;
+
+            _playerControls.Menu.Left.Disable();
+            _playerControls.Menu.Right.Disable();
         }
     }
 }

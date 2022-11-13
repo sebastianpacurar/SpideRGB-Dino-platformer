@@ -10,7 +10,8 @@ TagManager:
   - Swap
   - CM2D
   - GrappleArea
-  - SwingArea
+  - TopDinoContainer
+  - BottomDinoContainer
   layers:
   - Default
   - TransparentFX

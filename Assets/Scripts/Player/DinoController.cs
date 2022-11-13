@@ -10,26 +10,25 @@ namespace Player {
         private float _input;
         private bool _jumpPressed;
 
-        [SerializeField] private LayerMask groundLayer;
-        [SerializeField] private Transform groundedPos;
-        [SerializeField] private SpriteRenderer shadowSprite;
-
         [SerializeField] private float speed = 10f;
         [SerializeField] private float jumpForce = 10f;
+
+        [SerializeField] private LayerMask groundLayer;
+        [SerializeField] private Transform groundedPos;
+
+        [SerializeField] private SpriteRenderer shadowSprite;
 
         private Rigidbody2D _rb;
         private SpriteRenderer _sr;
         private Animator _animator;
         private CinemachineVirtualCamera _cineMachineCam;
         private ParticleSystem _ps;
-        private SpringJoint2D _springJoint2D;
 
         private void Awake() {
             _controls = new PlayerControls();
             _rb = GetComponent<Rigidbody2D>();
             _sr = GetComponent<SpriteRenderer>();
             _animator = GetComponent<Animator>();
-            _springJoint2D = GetComponent<SpringJoint2D>();
         }
 
         private void Start() {
@@ -83,7 +82,7 @@ namespace Player {
         private void Move() {
             _input = _controls.Dino.Move.ReadValue<float>();
         }
-        
+
         private void Jump(InputAction.CallbackContext ctx) {
             switch (ctx.phase) {
                 case InputActionPhase.Started:

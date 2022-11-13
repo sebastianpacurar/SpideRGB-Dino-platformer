@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
     [SerializeField] private GameObject dino;
+    [SerializeField] private GameObject dinoSwapPanel;
     [HideInInspector] public static GameManager Instance;
 
     private void Awake() {
@@ -25,6 +26,7 @@ public class GameManager : MonoBehaviour {
     private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
         if (scene.name.Equals("LevelOne")) {
             Instantiate(dino);
+            Instantiate(dinoSwapPanel);
         }
     }
 }
