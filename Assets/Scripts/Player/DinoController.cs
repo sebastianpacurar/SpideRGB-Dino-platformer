@@ -10,6 +10,9 @@ namespace Player {
         private float _input;
         private bool _jumpPressed;
 
+        // used to override all other animations by Hit animation
+        public bool IsHit { get; set; }
+
         [SerializeField] private float speed = 10f;
         [SerializeField] private float jumpForce = 10f;
 
@@ -108,14 +111,18 @@ namespace Player {
         }
 
         private void UpdateAnimationState() {
-            if (_rb.velocity.x is < 0f or > 0f && IsGrounded()) {
-                _animState = DinoAnimState.running;
-            } else if (_rb.velocity.y > 0f && !IsGrounded()) {
-                _animState = DinoAnimState.jumping;
-            } else if (_rb.velocity.y < 0f && !IsGrounded()) {
-                _animState = DinoAnimState.falling;
+            if (!IsHit) {
+                if (_rb.velocity.x is < 0f or > 0f && IsGrounded()) {
+                    _animState = DinoAnimState.running;
+                } else if (_rb.velocity.y > 0f && !IsGrounded()) {
+                    _animState = DinoAnimState.jumping;
+                } else if (_rb.velocity.y < 0f && !IsGrounded()) {
+                    _animState = DinoAnimState.falling;
+                } else {
+                    _animState = DinoAnimState.idle;
+                }
             } else {
-                _animState = DinoAnimState.idle;
+                _animState = DinoAnimState.hit;
             }
 
             _animator.SetInteger("state", (int)_animState);
@@ -133,6 +140,11 @@ namespace Player {
                     _sr.flipX = false;
                     break;
             }
+        }
+
+        // called in Hit animation at the end of the anim timeline
+        private void StopHitAnimation() {
+            IsHit = false;
         }
     }
 }

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace Player {
-    public class SwapEffect : MonoBehaviour {
+    public class SwapAnimationEvent : MonoBehaviour {
         private SpriteRenderer _dino;
         private Animator _animator;
 

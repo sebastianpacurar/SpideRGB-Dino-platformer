@@ -12,6 +12,7 @@ TagManager:
   - GrappleArea
   - TopDinoContainer
   - BottomDinoContainer
+  - HpBar
   layers:
   - Default
   - TransparentFX

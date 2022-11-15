@@ -1,3 +1,4 @@
+using Player;
 using UnityEngine;
 
 namespace Platforms {
@@ -7,6 +8,9 @@ namespace Platforms {
 
         private SpriteRenderer _sr;
         private CapsuleCollider2D _capsuleCollider2d;
+        private GameObject _container;
+        private HpBar _dinoHpScript;
+        private DinoController _dinoControllerScript;
 
         private void Awake() {
             _sr = GetComponent<SpriteRenderer>();
@@ -14,6 +18,10 @@ namespace Platforms {
         }
 
         private void Start() {
+            _container = transform.parent.gameObject;
+            _dinoHpScript = GameObject.FindGameObjectWithTag("HpBar").GetComponent<HpBar>();
+            _dinoControllerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<DinoController>();
+
             _ps = transform.GetChild(0).GetComponent<ParticleSystem>();
             _emissionModule = _ps.emission;
         }
@@ -24,6 +32,13 @@ namespace Platforms {
                 if (dino.name.Split(" ")[0].Equals(gameObject.tag)) {
                     dino.transform.SetParent(transform);
                 } else {
+                    // activate Hit Animation
+                    _dinoControllerScript.IsHit = true;
+                    
+                    // decrease Hp with 1 unit
+                    _dinoHpScript.CurrentHp -= 1;
+                    
+                    // Destroy current platform and its container
                     DestroyPlatform();
                 }
             }
@@ -45,8 +60,10 @@ namespace Platforms {
             Invoke(nameof(DestroyObj), _ps.main.duration);
         }
 
+        // destroy the Platform Container object
         private void DestroyObj() {
             Destroy(gameObject);
+            Destroy(_container);
         }
     }
 }
