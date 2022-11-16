@@ -2,14 +2,14 @@ using Player;
 using UnityEngine;
 
 namespace Platforms {
-    public class ParticleBurst : MonoBehaviour {
+    public class CollisionLogic : MonoBehaviour {
         private ParticleSystem _ps;
         private ParticleSystem.EmissionModule _emissionModule;
 
         private SpriteRenderer _sr;
         private CapsuleCollider2D _capsuleCollider2d;
         private GameObject _container;
-        private HpBar _dinoHpScript;
+        private HpManager _dinoHpScript;
         private DinoController _dinoControllerScript;
 
         private void Awake() {
@@ -19,7 +19,7 @@ namespace Platforms {
 
         private void Start() {
             _container = transform.parent.gameObject;
-            _dinoHpScript = GameObject.FindGameObjectWithTag("HpBar").GetComponent<HpBar>();
+            _dinoHpScript = GameObject.FindGameObjectWithTag("HpBar").GetComponent<HpManager>();
             _dinoControllerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<DinoController>();
 
             _ps = transform.GetChild(0).GetComponent<ParticleSystem>();
@@ -34,10 +34,10 @@ namespace Platforms {
                 } else {
                     // activate Hit Animation
                     _dinoControllerScript.IsHit = true;
-                    
+
                     // decrease Hp with 1 unit
                     _dinoHpScript.CurrentHp -= 1;
-                    
+
                     // Destroy current platform and its container
                     DestroyPlatform();
                 }

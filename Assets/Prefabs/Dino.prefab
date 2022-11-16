@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 42539695}
   - component: {fileID: 42539694}
   m_Layer: 5
-  m_Name: Container Bar
+  m_Name: Progress Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5393,6 +5393,7 @@ GameObject:
   - component: {fileID: 7629145136983338513}
   - component: {fileID: 7461104927410366384}
   - component: {fileID: 832547457}
+  - component: {fileID: 5990076002213586227}
   m_Layer: 0
   m_Name: Dino
   m_TagString: Player
@@ -5729,3 +5730,15 @@ SpringJoint2D:
   m_Distance: 0.005
   m_DampingRatio: 0
   m_Frequency: 0
+--- !u!114 &5990076002213586227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1300463051800894524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb3d1868058ddc94e8f75694dc4b6f3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

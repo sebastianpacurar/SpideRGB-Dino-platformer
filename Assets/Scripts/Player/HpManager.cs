@@ -2,22 +2,22 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace Player {
-    public class HpBar : MonoBehaviour {
+    public class HpManager : MonoBehaviour {
         private Camera _mainCam;
 
         // used in ParticleBurst.cs to decrease by 1 when hit by wrong platform
         public int CurrentHp { get; set; } = 5;
-        private int _maxHp = 5;
+        public int MaxHp { get; } = 5;
 
         // used to swap between red and green hp bar sprite image
         [SerializeField] private Sprite[] sprites;
 
         [SerializeField] private Canvas parentCanvas;
-        private Image _image;
+        private Image _img;
 
         private void Awake() {
             _mainCam = Camera.main;
-            _image = GetComponent<Image>();
+            _img = GetComponent<Image>();
         }
 
         private void Start() {
@@ -33,14 +33,14 @@ namespace Player {
             // set the corresponding progress bar sprite (0=green, 1=red)
             switch (CurrentHp) {
                 case >= 3:
-                    _image.sprite = sprites[0];
+                    _img.sprite = sprites[0];
                     break;
                 case <= 2:
-                    _image.sprite = sprites[1];
+                    _img.sprite = sprites[1];
                     break;
             }
 
-            _image.fillAmount = CurrentHp / (float)_maxHp;
+            _img.fillAmount = CurrentHp / (float)MaxHp;
         }
     }
 }

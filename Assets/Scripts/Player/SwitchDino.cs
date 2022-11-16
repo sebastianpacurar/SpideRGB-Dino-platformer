@@ -1,5 +1,5 @@
 using Menu;
-using Menu.InGameMenu.SwapDinoUi;
+using Menu.InGameMenu.SwapCanvas;
 using Platforms;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -14,7 +14,7 @@ namespace Player {
         [SerializeField] private AnimatorOverrideController[] overrideControllers;
         private Animator _animator;
         private PlayerControls _playerControls;
-        private ParticleBurst _parentPlatform;
+        private CollisionLogic _parentPlatform;
         private LineRenderer _lineRenderer;
 
         private SwitchTop _topUiContainer;
@@ -58,7 +58,7 @@ namespace Player {
             // destroy the platform if dino color doesn't match the platform tag when swapping while grounded 
             if (parent) {
                 if (!parent.CompareTag(DinoType)) {
-                    _parentPlatform = parent.GetComponent<ParticleBurst>();
+                    _parentPlatform = parent.GetComponent<CollisionLogic>();
                     _parentPlatform.DestroyPlatform();
                 }
             }

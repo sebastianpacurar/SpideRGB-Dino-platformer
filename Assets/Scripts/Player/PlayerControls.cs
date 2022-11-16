@@ -156,6 +156,15 @@ namespace Player
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Esc"",
+                    ""type"": ""Button"",
+                    ""id"": ""b9eb6351-4ad5-42fa-9259-ef7ffdd16cd5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -178,6 +187,17 @@ namespace Player
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Right"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f0cbd19b-276e-4add-a4f3-8838977e6180"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Esc"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -213,6 +233,7 @@ namespace Player
             m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
             m_Menu_Left = m_Menu.FindAction("Left", throwIfNotFound: true);
             m_Menu_Right = m_Menu.FindAction("Right", throwIfNotFound: true);
+            m_Menu_Esc = m_Menu.FindAction("Esc", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -331,12 +352,14 @@ namespace Player
         private IMenuActions m_MenuActionsCallbackInterface;
         private readonly InputAction m_Menu_Left;
         private readonly InputAction m_Menu_Right;
+        private readonly InputAction m_Menu_Esc;
         public struct MenuActions
         {
             private @PlayerControls m_Wrapper;
             public MenuActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
             public InputAction @Left => m_Wrapper.m_Menu_Left;
             public InputAction @Right => m_Wrapper.m_Menu_Right;
+            public InputAction @Esc => m_Wrapper.m_Menu_Esc;
             public InputActionMap Get() { return m_Wrapper.m_Menu; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -352,6 +375,9 @@ namespace Player
                     @Right.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnRight;
                     @Right.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnRight;
                     @Right.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnRight;
+                    @Esc.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnEsc;
+                    @Esc.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnEsc;
+                    @Esc.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnEsc;
                 }
                 m_Wrapper.m_MenuActionsCallbackInterface = instance;
                 if (instance != null)
@@ -362,6 +388,9 @@ namespace Player
                     @Right.started += instance.OnRight;
                     @Right.performed += instance.OnRight;
                     @Right.canceled += instance.OnRight;
+                    @Esc.started += instance.OnEsc;
+                    @Esc.performed += instance.OnEsc;
+                    @Esc.canceled += instance.OnEsc;
                 }
             }
         }
@@ -386,6 +415,7 @@ namespace Player
         {
             void OnLeft(InputAction.CallbackContext context);
             void OnRight(InputAction.CallbackContext context);
+            void OnEsc(InputAction.CallbackContext context);
         }
     }
 }
