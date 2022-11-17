@@ -10,7 +10,6 @@ Material:
   m_Name: LiberationSans SDF Material
   m_Shader: {fileID: 4800000, guid: fe393ace9b354375a9cb14cdbbc28be4, type: 3}
   m_ValidKeywords:
-  - OUTLINE_ON
   - UNDERLAY_ON
   m_InvalidKeywords:
   - _EMISSION
@@ -92,7 +91,7 @@ Material:
     - _DetailNormalMapScale: 1
     - _Diffuse: 0.5
     - _DstBlend: 0
-    - _FaceDilate: 0
+    - _FaceDilate: 0.16
     - _FaceUVSpeedX: 0
     - _FaceUVSpeedY: 0
     - _GlossMapScale: 1
@@ -109,20 +108,20 @@ Material:
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _OutlineSoftness: 0
+    - _OutlineSoftness: 0.496
     - _OutlineUVSpeedX: 0
     - _OutlineUVSpeedY: 0
-    - _OutlineWidth: 0.18
+    - _OutlineWidth: 0.389
     - _Parallax: 0.02
     - _PerspectiveFilter: 0.875
     - _Reflectivity: 10
-    - _ScaleRatioA: 0.9
+    - _ScaleRatioA: 0.7302232
     - _ScaleRatioB: 1
-    - _ScaleRatioC: 0.73125
+    - _ScaleRatioC: 0.22993344
     - _ScaleX: 1
     - _ScaleY: 1
     - _ShaderFlags: 0
-    - _Sharpness: 0
+    - _Sharpness: 1
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SpecularPower: 2
@@ -135,10 +134,10 @@ Material:
     - _TextureHeight: 1024
     - _TextureWidth: 1024
     - _UVSec: 0
-    - _UnderlayDilate: 0
-    - _UnderlayOffsetX: 0
+    - _UnderlayDilate: 1
+    - _UnderlayOffsetX: -1
     - _UnderlayOffsetY: -1
-    - _UnderlaySoftness: 0
+    - _UnderlaySoftness: 0.554
     - _VertexOffsetX: 0
     - _VertexOffsetY: 0
     - _WeightBold: 0.75
@@ -152,7 +151,7 @@ Material:
     - _FaceColor: {r: 1, g: 1, b: 1, a: 1}
     - _GlowColor: {r: 0, g: 1, b: 0, a: 0.5}
     - _MaskCoord: {r: 0, g: 0, b: 32767, a: 32767}
-    - _OutlineColor: {r: 0.07546591, g: 0.11662913, b: 0.10016384, a: 1}
+    - _OutlineColor: {r: 34.993774, g: 34.993774, b: 34.993774, a: 1}
     - _ReflectFaceColor: {r: 0, g: 0, b: 0, a: 1}
     - _ReflectOutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
