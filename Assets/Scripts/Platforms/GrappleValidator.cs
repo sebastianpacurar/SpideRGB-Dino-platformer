@@ -21,7 +21,7 @@ namespace Platforms {
             if (col.gameObject.CompareTag("GrappleArea")) {
                 // when the dino swings over (above) the platform, then deselect the node before disabling the object
                 // prevent deselection in case another platform exits the area
-                if (_dinoGrappleScript.SelectedPlatformName.Equals(name)) {
+                if (_dinoGrappleScript.SelectedPlatformName.Equals(transform.parent.name)) {
                     _dinoGrappleScript.DeselectNode();
                 }
 

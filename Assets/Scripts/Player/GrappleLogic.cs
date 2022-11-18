@@ -12,11 +12,14 @@ namespace Player {
 
         // the clicked platform node's RigidBody
         private Rigidbody2D _selectedNodeRb;
+        private bool _isPulling, _isPushing;
+
+        private DinoController _controller;
 
         // used to prevent OnTriggerExit to deselect node if another platform exits the BoxCollider area
         public string SelectedPlatformName { get; private set; } = string.Empty;
+        public float GrappleMaxDistance { get; set; }
 
-        private bool _isPulling, _isPushing;
 
         private void Awake() {
             _controls = new PlayerControls();
@@ -25,6 +28,8 @@ namespace Player {
         }
 
         private void Start() {
+            _controller = transform.gameObject.GetComponent<DinoController>();
+
             _lineRenderer.startWidth = 0.2f;
             _lineRenderer.endWidth = 0.2f;
             _lineRenderer.enabled = false;
@@ -65,7 +70,8 @@ namespace Player {
         // called in GrappleNode.cs upon OnPointerDown event
         public void SelectNode(GrappleNode node) {
             _selectedNodeRb = node.GetComponent<Rigidbody2D>();
-            SelectedPlatformName = node.transform.parent.name;
+            // assign the name of the grandparent, which contains the generated GUID
+            SelectedPlatformName = node.transform.parent.transform.parent.name;
         }
 
         // called in GrappleNode.cs upon OnPointerUp event
@@ -89,17 +95,17 @@ namespace Player {
                 _lineRenderer.SetPosition(1, position);
 
                 // Handle Pull Grapple update
-                if (_isPulling && _springJoint2D.distance >= 2f) {
-                    _springJoint2D.distance -= 0.2f;
+                if (_isPulling && _springJoint2D.distance >= 2.5f) {
+                    _springJoint2D.distance -= 0.3f;
                 }
 
                 // Handle Push Grapple update
-                if (_isPushing && _springJoint2D.distance <= 4.5f) {
-                    _springJoint2D.distance += 0.2f;
+                if (!_controller.IsGrounded() && _isPushing && _springJoint2D.distance <= GrappleMaxDistance) {
+                    _springJoint2D.distance += 0.3f;
                 }
 
-                if (_springJoint2D.distance >= 4.5f) {
-                    _springJoint2D.distance = 4.5f;
+                if (_springJoint2D.distance >= GrappleMaxDistance) {
+                    _springJoint2D.distance = GrappleMaxDistance;
                 }
             } else {
                 _lineRenderer.enabled = false;

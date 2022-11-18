@@ -12,9 +12,10 @@ namespace Player {
 
         // used to override all other animations by Hit animation
         public bool IsHit { get; set; }
-
-        [SerializeField] private float speed = 10f;
-        [SerializeField] private float jumpForce = 10f;
+        
+        // set in GameManager.cs
+        public float Speed { get; set; } 
+        public float JumpForce { get; set; }
 
         [SerializeField] private LayerMask groundLayer;
         [SerializeField] private Transform groundedPos;
@@ -26,6 +27,11 @@ namespace Player {
         private Animator _animator;
         private CinemachineVirtualCamera _cineMachineCam;
         private ParticleSystem _ps;
+        
+        // used for "push on grapple" condition
+        public bool IsGrounded() {
+            return Physics2D.OverlapCapsule(groundedPos.position, new Vector2(0.5f, 0.1f), CapsuleDirection2D.Horizontal, 0, groundLayer);
+        }
 
         private void Awake() {
             _controls = new PlayerControls();
@@ -57,11 +63,11 @@ namespace Player {
         private void ApplyVelocity() {
             if (_jumpPressed) {
                 var velocity = _rb.velocity;
-                _rb.velocity = new Vector2(velocity.x, velocity.y + jumpForce);
+                _rb.velocity = new Vector2(velocity.x, velocity.y + JumpForce);
                 _jumpPressed = false;
             }
 
-            _rb.velocity = new Vector2(_input * speed, _rb.velocity.y);
+            _rb.velocity = new Vector2(_input * Speed, _rb.velocity.y);
         }
 
         private void CreateTrail() {
@@ -76,10 +82,6 @@ namespace Player {
 
         private void UpdateDinoShadow() {
             shadowSprite.enabled = IsGrounded();
-        }
-
-        private bool IsGrounded() {
-            return Physics2D.OverlapCapsule(groundedPos.position, new Vector2(0.5f, 0.1f), CapsuleDirection2D.Horizontal, 0, groundLayer);
         }
 
         private void Move() {

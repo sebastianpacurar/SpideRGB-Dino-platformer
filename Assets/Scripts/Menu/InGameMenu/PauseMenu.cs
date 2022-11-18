@@ -28,7 +28,6 @@ namespace Menu.InGameMenu {
             panel.SetActive(true);
         }
 
-        //TODO: used by Back button
         public void PauseMenuDeactivate() {
             Time.timeScale = 1;
             panel.SetActive(false);
