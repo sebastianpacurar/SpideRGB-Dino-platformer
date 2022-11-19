@@ -23,8 +23,8 @@ namespace Menu.InGameMenu {
         }
 
         private void FillHpBar() {
-            _img.fillAmount = _dinoHpScript.CurrentHp / (float)_dinoHpScript.MaxHp;
-            _hpVal.text = $"{_dinoHpScript.CurrentHp} / {(float)_dinoHpScript.MaxHp}";
+            _img.fillAmount = _dinoHpScript.CurrentHp / (float)HpManager.MaxHp;
+            _hpVal.text = $"{_dinoHpScript.CurrentHp} / {(float)HpManager.MaxHp}";
         }
     }
 }

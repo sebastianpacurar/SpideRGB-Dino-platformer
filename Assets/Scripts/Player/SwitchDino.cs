@@ -1,4 +1,4 @@
-using Menu;
+using System.Collections;
 using Menu.InGameMenu.SwapCanvas;
 using Platforms;
 using UnityEngine;
@@ -19,6 +19,8 @@ namespace Player {
 
         private SwitchTop _topUiContainer;
         private SwitchBottom _bottomUiContainer;
+
+        private bool _btnCooldown;
 
         private void Awake() {
             _playerControls = new PlayerControls();
@@ -66,16 +68,32 @@ namespace Player {
             SetGrappleLineColor();
         }
 
+        // prevent spamming of Q and A keys
+        private void ResetBtnCd() {
+            _btnCooldown = false;
+        }
+        
+
         private void GetLeft(InputAction.CallbackContext ctx) {
-            var leftActive = _topUiContainer.GetLeftActiveColor();
-            UpdateDinoUiSwap(leftActive, "left");
-            PerformSwap(leftActive);
+            if (!_btnCooldown) {
+                var leftActive = _topUiContainer.GetLeftActiveColor();
+                UpdateDinoUiSwap(leftActive, "left");
+                PerformSwap(leftActive);
+
+                Invoke(nameof(ResetBtnCd), 0.5f);
+                _btnCooldown = true;
+            }
         }
 
         private void GetRight(InputAction.CallbackContext ctx) {
-            var rightActive = _topUiContainer.GetRightActiveColor();
-            UpdateDinoUiSwap(rightActive, "right");
-            PerformSwap(rightActive);
+            if (!_btnCooldown) {
+                var rightActive = _topUiContainer.GetRightActiveColor();
+                UpdateDinoUiSwap(rightActive, "right");
+                PerformSwap(rightActive);
+
+                Invoke(nameof(ResetBtnCd), 0.5f);
+                _btnCooldown = true;
+            }
         }
 
         // swap the colors between the current and new color. update arrows to point towards the right color.

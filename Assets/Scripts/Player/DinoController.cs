@@ -9,12 +9,13 @@ namespace Player {
         private PlayerControls _controls;
         private float _input;
         private bool _jumpPressed;
+        private readonly float _maxFallSpeed = -15f;
 
         // used to override all other animations by Hit animation
         public bool IsHit { get; set; }
-        
+
         // set in GameManager.cs
-        public float Speed { get; set; } 
+        public float Speed { get; set; }
         public float JumpForce { get; set; }
 
         [SerializeField] private LayerMask groundLayer;
@@ -27,7 +28,7 @@ namespace Player {
         private Animator _animator;
         private CinemachineVirtualCamera _cineMachineCam;
         private ParticleSystem _ps;
-        
+
         // used for "push on grapple" condition
         public bool IsGrounded() {
             return Physics2D.OverlapCapsule(groundedPos.position, new Vector2(0.5f, 0.1f), CapsuleDirection2D.Horizontal, 0, groundLayer);
@@ -68,6 +69,9 @@ namespace Player {
             }
 
             _rb.velocity = new Vector2(_input * Speed, _rb.velocity.y);
+            if (_rb.velocity.y < _maxFallSpeed) {
+                _rb.velocity = new Vector2(_rb.velocity.x, _maxFallSpeed);
+            }
         }
 
         private void CreateTrail() {

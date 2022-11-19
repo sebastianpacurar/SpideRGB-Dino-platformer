@@ -7,7 +7,7 @@ namespace Player {
 
         // used in ParticleBurst.cs to decrease by 1 when hit by wrong platform
         public int CurrentHp { get; set; } = 5;
-        public int MaxHp { get; } = 5;
+        public static int MaxHp => 5;
 
         // used to swap between red and green hp bar sprite image
         [SerializeField] private Sprite[] sprites;

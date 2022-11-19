@@ -24,7 +24,7 @@ namespace Player {
         private void HandleLives() {
             if (_dinoHpScript.CurrentHp > 0) return;
             Lives -= 1;
-            _dinoHpScript.CurrentHp = _dinoHpScript.MaxHp;
+            _dinoHpScript.CurrentHp = HpManager.MaxHp;
         }
     }
 }

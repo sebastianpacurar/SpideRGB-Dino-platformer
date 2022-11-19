@@ -1,7 +1,6 @@
 using Player;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 
 namespace Platforms {
     public class GrappleNode : MonoBehaviour, IPointerDownHandler, IPointerUpHandler {
@@ -18,9 +17,6 @@ namespace Platforms {
         }
 
         public void OnPointerUp(PointerEventData eventData) {
-            // SpiderDino is not forced to hold LMB to hold grapple attached
-            if (SceneManager.GetActiveScene().name.Equals("SpiderDino")) return;
-
             _dinoGrappleScript.DeselectNode();
         }
     }
