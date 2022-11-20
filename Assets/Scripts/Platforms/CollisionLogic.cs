@@ -1,3 +1,4 @@
+using System;
 using Player;
 using UnityEngine;
 
@@ -41,6 +42,17 @@ namespace Platforms {
                     // Destroy current platform and its container
                     DestroyPlatform();
                 }
+            }
+
+            if (col.gameObject.transform.parent.gameObject.CompareTag("Platform")) {
+                DestroyPlatform();
+            }
+        }
+
+        // destroy platforms when reaching edges (applies to Spider Dino platforms)
+        private void OnTriggerEnter2D(Collider2D col) {
+            if (col.gameObject.CompareTag("Edge")) {
+                DestroyPlatform();
             }
         }
 

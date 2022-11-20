@@ -6,10 +6,8 @@ namespace Platforms {
     // this applies only to Spider Dino game mode
     public class PlatformManager : MonoBehaviour {
         [SerializeField] private GameObject[] platforms;
-
-        // [SerializeField] private TextMeshProUGUI scoreText;
-        [HideInInspector] public int score = 0;
-        // private int _displayedScore = 0;
+        [SerializeField] private Transform leftWall;
+        [SerializeField] private Transform rightWall;
 
         private Camera _mainCam;
         private CinemachineVirtualCamera _cm;
@@ -29,17 +27,15 @@ namespace Platforms {
             StartCoroutine(SpawnPlatforms());
         }
 
-        IEnumerator SpawnPlatforms() {
+        private IEnumerator SpawnPlatforms() {
             while (true) {
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(0.25f);
 
                 var platform = Instantiate(platforms[Random.Range(0, platforms.Length)], transform);
                 platform.name = $"{name} - {System.Guid.NewGuid().ToString()}";
 
-                
                 // if random throws 0, then enable patrol points
                 if (Random.Range(0, 2).Equals(0)) {
-                    
                     var distance = Random.Range(5, 11);
 
                     Vector2 pointA;
@@ -61,11 +57,17 @@ namespace Platforms {
 
                 // generation of platforms location
                 var cmTransform = _cm.transform.position;
-                var x = _screenBounds.x + cmTransform.x;
                 var y = _screenBounds.y + cmTransform.y;
 
-                var pos = new Vector3(Random.Range(-x, x), y, 0);
-                pos.x = Mathf.Clamp(pos.x, -x + _spriteWidth, x - _spriteWidth);
+                var rightPos = rightWall.localPosition;
+                var leftPos = leftWall.localPosition;
+                var pos = new Vector3(Random.Range(leftPos.x, rightPos.x), y, 0);
+
+                // clamp x to X-axis cam view 
+                pos.x = Mathf.Clamp(pos.x, leftPos.x + _spriteWidth, rightPos.x - _spriteWidth);
+                // clamp y to 25% below and 25% above the top edge of the camera
+                pos.y = Mathf.Clamp(pos.y, y - _screenBounds.y / 2, y + _screenBounds.y / 2);
+
 
                 platform.transform.position = pos;
             }
