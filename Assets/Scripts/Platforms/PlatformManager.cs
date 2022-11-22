@@ -3,7 +3,6 @@ using Cinemachine;
 using UnityEngine;
 
 namespace Platforms {
-    // this applies only to Spider Dino game mode
     public class PlatformManager : MonoBehaviour {
         [SerializeField] private GameObject[] platforms;
         [SerializeField] private Transform leftWall;
@@ -34,8 +33,11 @@ namespace Platforms {
                 var platform = Instantiate(platforms[Random.Range(0, platforms.Length)], transform);
                 platform.name = $"{name} - {System.Guid.NewGuid().ToString()}";
 
-                // if random throws 0, then enable patrol points
-                if (Random.Range(0, 2).Equals(0)) {
+                // game is set on easy then make all platforms static
+                if (GameManager.Instance.GameDifficulty.Equals((int)Difficulty.Easy)) {
+                    platform.transform.GetChild(1).transform.GetChild(0).transform.position = Vector3.zero;
+                    platform.transform.GetChild(1).transform.GetChild(0).transform.position = Vector3.zero;
+                } else {
                     var distance = Random.Range(5, 11);
 
                     Vector2 pointA;

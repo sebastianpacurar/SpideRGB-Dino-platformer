@@ -3,12 +3,12 @@ using UnityEngine.SceneManagement;
 
 namespace Menu {
     public class MainMenu : MonoBehaviour {
-        public void StartAdventurerMode() {
-            SceneManager.LoadScene("LevelOne");
+        public void StartEasyDifficulty() {
+            SceneManager.LoadScene("Easy");
         }
 
-        public void StartSpiderDinoMode() {
-            SceneManager.LoadScene("SpiderDino");
+        public void StartHardDifficulty() {
+            SceneManager.LoadScene("Hard");
         }
     }
 }

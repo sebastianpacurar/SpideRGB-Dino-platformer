@@ -38,7 +38,6 @@ namespace Player {
             _springJoint2D.enabled = false;
         }
 
-
         private void Update() {
             HandleGrapplingHook();
         }
@@ -82,8 +81,6 @@ namespace Player {
 
         private void HandleGrapplingHook() {
             if (_selectedNodeRb) {
-                //TODO: add here speed manipulator when grappled
-                
                 var position = _selectedNodeRb.transform.position;
 
                 _lineRenderer.enabled = true;

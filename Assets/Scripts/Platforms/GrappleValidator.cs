@@ -1,10 +1,16 @@
 using Player;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Platforms {
     public class GrappleValidator : MonoBehaviour {
         private GameObject _grappleNodeObject;
         private GrappleLogic _dinoGrappleScript;
+        private SpriteRenderer _sr;
+
+        private void Awake() {
+            _sr = GetComponent<SpriteRenderer>();
+        }
 
         private void Start() {
             _dinoGrappleScript = GameObject.FindGameObjectWithTag("Player").GetComponent<GrappleLogic>();
@@ -15,6 +21,8 @@ namespace Platforms {
             if (col.gameObject.CompareTag("GrappleArea")) {
                 _grappleNodeObject.SetActive(true);
             }
+
+            _sr.color = _sr.color.WithAlpha(1f);
         }
 
         private void OnTriggerExit2D(Collider2D col) {
@@ -26,6 +34,7 @@ namespace Platforms {
                 }
 
                 _grappleNodeObject.SetActive(false);
+                _sr.color = _sr.color.WithAlpha(0.5f);
             }
         }
     }

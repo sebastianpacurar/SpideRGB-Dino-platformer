@@ -1,5 +1,5 @@
-using System;
 using Player;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Platforms {
@@ -32,6 +32,7 @@ namespace Platforms {
                 var dino = col.gameObject;
                 if (dino.name.Split(" ")[0].Equals(gameObject.tag)) {
                     dino.transform.SetParent(transform);
+                    _sr.color = _sr.color.WithAlpha(1f);
                 } else {
                     // activate Hit Animation
                     _dinoControllerScript.IsHit = true;
@@ -49,7 +50,6 @@ namespace Platforms {
             }
         }
 
-        // destroy platforms when reaching edges (applies to Spider Dino platforms)
         private void OnTriggerEnter2D(Collider2D col) {
             if (col.gameObject.CompareTag("Edge")) {
                 DestroyPlatform();
@@ -59,6 +59,7 @@ namespace Platforms {
         private void OnCollisionExit2D(Collision2D col) {
             if (col.gameObject.CompareTag("Player")) {
                 col.gameObject.transform.SetParent(null);
+                _sr.color = _sr.color.WithAlpha(0.5f);
             }
         }
 

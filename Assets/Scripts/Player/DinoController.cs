@@ -15,8 +15,8 @@ namespace Player {
         public bool IsHit { get; set; }
 
         // set in GameManager.cs
-        public float Speed { get; set; }
-        public float JumpForce { get; set; }
+        public float Speed { get; set; } = 10f;
+        public float JumpForce { get; set; } = 20f;
 
         [SerializeField] private LayerMask groundLayer;
         [SerializeField] private Transform groundedPos;
@@ -119,16 +119,16 @@ namespace Player {
         private void UpdateAnimationState() {
             if (!IsHit) {
                 if (_rb.velocity.x is < 0f or > 0f && IsGrounded()) {
-                    _animState = DinoAnimState.running;
+                    _animState = DinoAnimState.Running;
                 } else if (_rb.velocity.y > 0f && !IsGrounded()) {
-                    _animState = DinoAnimState.jumping;
+                    _animState = DinoAnimState.Jumping;
                 } else if (_rb.velocity.y < 0f && !IsGrounded()) {
-                    _animState = DinoAnimState.falling;
+                    _animState = DinoAnimState.Falling;
                 } else {
-                    _animState = DinoAnimState.idle;
+                    _animState = DinoAnimState.Idle;
                 }
             } else {
-                _animState = DinoAnimState.hit;
+                _animState = DinoAnimState.Hit;
             }
 
             _animator.SetInteger("state", (int)_animState);

@@ -1,9 +1,9 @@
 namespace Player {
     public enum DinoAnimState {
-        idle,
-        running,
-        jumping,
-        falling,
-        hit
+        Idle,
+        Running,
+        Jumping,
+        Falling,
+        Hit
     }
 }
