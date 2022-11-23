@@ -16,7 +16,7 @@ namespace Platforms {
 
         // if difficulty set to hard, and the target platform mismatches the dino color, destroy the platform
         public void OnPointerDown(PointerEventData eventData) {
-            if (!transform.parent.CompareTag(_dino.name.Split(" ")[0]) && GameManager.Instance.GameDifficulty.Equals((int)Difficulty.Hard)) {
+            if (!transform.parent.CompareTag(_dino.name.Split(" ")[0]) && GameManager.Instance.GameDifficulty.Equals((int)Difficulty.Impossible)) {
                 _collisionLogic.DestroyPlatform();
             } else {
                 _dinoGrappleScript.SelectNode(this);

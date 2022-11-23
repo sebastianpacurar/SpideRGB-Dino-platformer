@@ -13,6 +13,7 @@ namespace Platforms {
         private Vector2 _screenBounds;
 
         private float _spriteWidth;
+        private float _spawnTime;
 
         private void Awake() {
             _mainCam = Camera.main;
@@ -23,12 +24,20 @@ namespace Platforms {
             _cm = GameObject.FindGameObjectWithTag("CM2D").GetComponent<CinemachineVirtualCamera>();
             _spriteWidth = platforms[0].transform.GetChild(0).GetComponent<SpriteRenderer>().bounds.extents.x;
 
+            // set spawn rate based on difficulty
+            _spawnTime = GameManager.Instance.GameDifficulty switch {
+                (int)Difficulty.Easy => 1f,
+                (int)Difficulty.Hard => 0.5f,
+                (int)Difficulty.Impossible => 0.25f,
+                _ => 1f,
+            };
+
             StartCoroutine(SpawnPlatforms());
         }
 
         private IEnumerator SpawnPlatforms() {
             while (true) {
-                yield return new WaitForSeconds(0.25f);
+                yield return new WaitForSeconds(_spawnTime);
 
                 var platform = Instantiate(platforms[Random.Range(0, platforms.Length)], transform);
                 platform.name = $"{name} - {System.Guid.NewGuid().ToString()}";

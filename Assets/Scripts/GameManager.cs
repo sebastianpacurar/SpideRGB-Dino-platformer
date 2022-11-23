@@ -30,6 +30,11 @@ public class GameManager : MonoBehaviour {
     }
 
     private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
+        // used to fix quirky GoToMainMenu() since it's called by 3 different buttons
+        if (Time.timeScale.Equals(0)) {
+            Time.timeScale = 1;
+        }
+
         if (scene.name.Equals("MainMenu")) return;
         var dinoObj = Instantiate(dino);
         var grappleArea = dinoObj.transform.GetChild(4).GetComponent<BoxCollider2D>();
@@ -54,7 +59,6 @@ public class GameManager : MonoBehaviour {
                 GameDifficulty = (int)Difficulty.Hard;
                 break;
         }
-
 
         Instantiate(dinoSwapPanel);
     }

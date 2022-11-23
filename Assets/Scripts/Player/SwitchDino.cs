@@ -1,4 +1,3 @@
-using System.Collections;
 using Menu.InGameMenu.SwapCanvas;
 using Platforms;
 using UnityEngine;
@@ -72,7 +71,6 @@ namespace Player {
         private void ResetBtnCd() {
             _btnCooldown = false;
         }
-        
 
         private void GetLeft(InputAction.CallbackContext ctx) {
             if (!_btnCooldown) {

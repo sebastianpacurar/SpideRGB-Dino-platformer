@@ -7,6 +7,8 @@ namespace Menu.InGameMenu {
     public class PauseMenu : MonoBehaviour {
         [SerializeField] private GameObject panel;
         private PlayerControls _controls;
+        private FailedMenu _failedMenu;
+        private SuccessMenu _successMenu;
 
         private bool _isPaused;
 
@@ -14,7 +16,13 @@ namespace Menu.InGameMenu {
             _controls = new PlayerControls();
         }
 
+        private void Start() {
+            _failedMenu = GameObject.FindGameObjectWithTag("InGameUi").GetComponent<FailedMenu>();
+            _successMenu = GameObject.FindGameObjectWithTag("InGameUi").GetComponent<SuccessMenu>();
+        }
+
         private void ToggleMenu(InputAction.CallbackContext ctx) {
+            if (_failedMenu.Active || _successMenu.Active) return;
             _isPaused = !_isPaused;
             if (_isPaused) {
                 PauseMenuActivate();
@@ -28,7 +36,7 @@ namespace Menu.InGameMenu {
             panel.SetActive(true);
         }
 
-        public void PauseMenuDeactivate() {
+        private void PauseMenuDeactivate() {
             Time.timeScale = 1;
             panel.SetActive(false);
         }

@@ -1,9 +1,8 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Player {
     public class LifeManager : MonoBehaviour {
-        public int Lives { get; private set; } = 5;
+        public int Lives { get; set; } = 5;
         private HpManager _dinoHpScript;
 
         private void Start() {
@@ -11,14 +10,7 @@ namespace Player {
         }
 
         private void Update() {
-            HandleGameOverScreen();
             HandleLives();
-        }
-
-        private void HandleGameOverScreen() {
-            if (Lives == 0) {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            }
         }
 
         private void HandleLives() {

@@ -13,9 +13,10 @@ TagManager:
   - TopDinoContainer
   - BottomDinoContainer
   - HpBar
-  - PauseMenu
   - Platform
   - Edge
+  - EndGameBounds
+  - InGameUi
   layers:
   - Default
   - TransparentFX
