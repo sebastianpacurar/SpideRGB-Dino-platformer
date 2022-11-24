@@ -1,3 +1,4 @@
+using Menu.InGameMenu;
 using Player;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -11,7 +12,8 @@ namespace Platforms {
         private CapsuleCollider2D _capsuleCollider2d;
         private GameObject _container;
         private HpManager _dinoHpScript;
-        private DinoController _dinoControllerScript;
+        private DinoController _controller;
+        private ProgressDetails _progressDetails;
 
         private void Awake() {
             _sr = GetComponent<SpriteRenderer>();
@@ -21,7 +23,8 @@ namespace Platforms {
         private void Start() {
             _container = transform.parent.gameObject;
             _dinoHpScript = GameObject.FindGameObjectWithTag("HpBar").GetComponent<HpManager>();
-            _dinoControllerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<DinoController>();
+            _controller = GameObject.FindGameObjectWithTag("Player").GetComponent<DinoController>();
+            _progressDetails = GameObject.FindGameObjectWithTag("InGameUi").transform.GetChild(2).GetComponent<ProgressDetails>();
 
             _ps = transform.GetChild(0).GetComponent<ParticleSystem>();
             _emissionModule = _ps.emission;
@@ -35,10 +38,13 @@ namespace Platforms {
                     _sr.color = _sr.color.WithAlpha(1f);
                 } else {
                     // activate Hit Animation
-                    _dinoControllerScript.IsHit = true;
+                    _controller.IsHit = true;
 
                     // decrease Hp with 1 unit
                     _dinoHpScript.CurrentHp -= 1;
+
+                    // increase counter for Destroyed Platforms
+                    _progressDetails.DestroyedPlatformsCount += 1;
 
                     // Destroy current platform and its container
                     DestroyPlatform();

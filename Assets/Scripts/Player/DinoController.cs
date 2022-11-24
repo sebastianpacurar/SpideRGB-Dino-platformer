@@ -9,7 +9,6 @@ namespace Player {
         private PlayerControls _controls;
         private float _input;
         private bool _jumpPressed;
-        private readonly float _maxFallSpeed = -15f;
 
         // used to override all other animations by Hit animation
         public bool IsHit { get; set; }
@@ -17,6 +16,7 @@ namespace Player {
         // set in GameManager.cs
         public float Speed { get; set; } = 10f;
         public float JumpForce { get; set; } = 20f;
+        public float MaxFallSpeed { get; set; } = -15f;
 
         [SerializeField] private LayerMask groundLayer;
         [SerializeField] private Transform groundedPos;
@@ -69,8 +69,8 @@ namespace Player {
             }
 
             _rb.velocity = new Vector2(_input * Speed, _rb.velocity.y);
-            if (_rb.velocity.y < _maxFallSpeed) {
-                _rb.velocity = new Vector2(_rb.velocity.x, _maxFallSpeed);
+            if (_rb.velocity.y < MaxFallSpeed) {
+                _rb.velocity = new Vector2(_rb.velocity.x, MaxFallSpeed);
             }
         }
 

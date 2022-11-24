@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour {
                 grappleLogic.GrappleMaxDistance = 9f;
                 dinoController.Speed = 10f;
                 dinoController.JumpForce = 20f;
+                dinoController.MaxFallSpeed = -10f;
                 grappleArea.offset = new Vector2(0, 6);
                 grappleArea.size = new Vector2(20, 10);
                 GameDifficulty = (int)Difficulty.Easy;
@@ -54,6 +55,7 @@ public class GameManager : MonoBehaviour {
                 grappleLogic.GrappleMaxDistance = 9f;
                 dinoController.Speed = 8f;
                 dinoController.JumpForce = 20f;
+                dinoController.MaxFallSpeed = -15f;
                 grappleArea.offset = new Vector2(0, 6);
                 grappleArea.size = new Vector2(20, 10);
                 GameDifficulty = (int)Difficulty.Hard;

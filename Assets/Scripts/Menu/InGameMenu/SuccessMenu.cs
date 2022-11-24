@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 namespace Menu.InGameMenu {
     public class SuccessMenu : MonoBehaviour {
         [SerializeField] private GameObject panel;
+        
 
         public bool Active { get; set; }
 
