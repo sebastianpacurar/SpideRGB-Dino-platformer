@@ -1,8 +1,8 @@
-using Menu.InGameMenu.SwapCanvas;
 using TMPro;
+using UI.InGameMenu.SwapCanvas;
 using UnityEngine;
 
-namespace Player {
+namespace Player.HelperUi {
     public class SwapHelper : MonoBehaviour {
         private SwitchTop _switchTopUiScript;
         private TextMeshProUGUI _left;

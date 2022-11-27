@@ -2,7 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 
-namespace Menu.InGameMenu {
+namespace UI.InGameMenu {
     public class ProgressDetails : MonoBehaviour {
         public int DestroyedPlatformsCount { get; set; }
         [SerializeField] private TextMeshProUGUI platformsTxt;

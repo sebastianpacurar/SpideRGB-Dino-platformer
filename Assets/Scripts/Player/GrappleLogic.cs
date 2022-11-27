@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 namespace Player {
     public class GrappleLogic : MonoBehaviour {
         private PlayerControls _controls;
+        private DinoController _controller;
         private GameObject _grappleArea;
 
         private LineRenderer _lineRenderer;
@@ -14,9 +15,7 @@ namespace Player {
         private Rigidbody2D _selectedNodeRb;
         private bool _isPulling, _isPushing;
         private readonly float _grappleMaxDistance = 9f;
-
-
-        private DinoController _controller;
+        
 
         // used to prevent OnTriggerExit to deselect node if another platform exits the BoxCollider area
         public string SelectedPlatformName { get; private set; } = string.Empty;

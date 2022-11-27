@@ -2,13 +2,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Menu.InGameMenu {
+namespace UI.InGameMenu {
     public class SuccessMenu : MonoBehaviour {
         [SerializeField] private GameObject panel;
         [SerializeField] private TextMeshProUGUI destroyedPlatformsTxt;
         [SerializeField] private TextMeshProUGUI timeTxt;
         private ProgressDetails _progressDetails;
-
 
         public bool Active { get; set; }
 

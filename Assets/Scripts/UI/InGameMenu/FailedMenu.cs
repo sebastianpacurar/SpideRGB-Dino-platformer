@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Menu.InGameMenu {
+namespace UI.InGameMenu {
     public class FailedMenu : MonoBehaviour {
         [SerializeField] private GameObject panel;
         private LifeManager _dinoLifeScript;

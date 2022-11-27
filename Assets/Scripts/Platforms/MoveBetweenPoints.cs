@@ -11,9 +11,11 @@ namespace Platforms {
 
         private void Awake() {
             _animator = GetComponent<Animator>();
+            // set platform speed based on game difficulty
             _speed = GameManager.Instance.GameDifficulty switch {
-                (int)Difficulty.Hero => Random.Range(2, 3),
-                (int)Difficulty.Superhero => Random.Range(4, 5),
+                (int)Difficulty.Hero => Random.Range(2.0f, 4.0f),
+                (int)Difficulty.Superhero => Random.Range(4.0f, 5.0f),
+                (int)Difficulty.Epichero => Random.Range(5.0f, 7.0f),
                 _ => 0f,
             };
         }

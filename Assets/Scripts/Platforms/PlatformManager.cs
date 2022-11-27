@@ -26,9 +26,10 @@ namespace Platforms {
 
             // set spawn rate based on difficulty
             _spawnTime = GameManager.Instance.GameDifficulty switch {
-                (int)Difficulty.Sidekick => 1f,
+                (int)Difficulty.Sidekick => 0.75f,
                 (int)Difficulty.Hero => 0.5f,
                 (int)Difficulty.Superhero => 0.25f,
+                (int)Difficulty.Epichero => 0.15f,
                 _ => 1f,
             };
 
@@ -65,6 +66,7 @@ namespace Platforms {
                         break;
 
                     case (int)Difficulty.Superhero:
+                    case (int)Difficulty.Epichero:
                         platform.transform.GetChild(1).transform.GetChild(2).gameObject.SetActive(true); // there are at least 3 patrol points and at most 4
 
                         // logic is Distance (rand float between 5 and 10 inclusive) divided by random float between 1 and 3
@@ -96,6 +98,11 @@ namespace Platforms {
 
                 finalPos.x = Mathf.Clamp(finalPos.x, leftPos.x + _spriteWidth, rightPos.x - _spriteWidth); // clamp x to X-axis cam view 
                 finalPos.y = Mathf.Clamp(finalPos.y, y - _screenBounds.y / 2, y + _screenBounds.y / 2); // clamp y to 25% below and 25% above the top edge of the camera
+
+                // Set boundary for the highest point platforms can spawn on the Y-axis (prevent them from spawning outside of the game area)
+                if (finalPos.y > 190f) {
+                    finalPos.y = Random.Range(minInclusive: 180.0f, maxInclusive: 185.0f);
+                }
 
                 platform.transform.position = finalPos;
             }

@@ -1,5 +1,5 @@
-using Menu.InGameMenu;
 using Player;
+using UI.InGameMenu;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -11,25 +11,27 @@ namespace Platforms {
         private SpriteRenderer _sr;
         private CapsuleCollider2D _capsuleCollider2d;
         private GameObject _container;
-        private HpManager _dinoHpScript;
+        private LifeManager _lifeManager;
         private DinoController _controller;
         private ProgressDetails _progressDetails;
 
-        [SerializeField] private AudioClip[] destroySfx;
-        private AudioSource _audioSource;
+        [SerializeField] private AudioClip[] destroyedSfxClips;
+        private AudioSource _destroyedSfx;
 
         private void Awake() {
             _sr = GetComponent<SpriteRenderer>();
             _capsuleCollider2d = GetComponent<CapsuleCollider2D>();
-            _audioSource = GetComponent<AudioSource>();
+            _destroyedSfx = GetComponent<AudioSource>();
         }
 
         private void Start() {
             _container = transform.parent.gameObject;
-            _dinoHpScript = GameObject.FindGameObjectWithTag("HpBar").GetComponent<HpManager>();
-            _controller = GameObject.FindGameObjectWithTag("Player").GetComponent<DinoController>();
-            _progressDetails = GameObject.FindGameObjectWithTag("InGameUi").transform.Find("Dino Progress UI").GetComponent<ProgressDetails>();
 
+            var player = GameObject.FindGameObjectWithTag("Player");
+            _lifeManager = player.GetComponent<LifeManager>();
+            _controller = player.GetComponent<DinoController>();
+
+            _progressDetails = GameObject.FindGameObjectWithTag("InGameUi").transform.Find("Dino Progress UI").GetComponent<ProgressDetails>();
             _ps = transform.Find("Particle System").GetComponent<ParticleSystem>();
             _emissionModule = _ps.emission;
         }
@@ -45,7 +47,7 @@ namespace Platforms {
                     _controller.IsHit = true;
 
                     // decrease Hp with 1 unit
-                    _dinoHpScript.CurrentHp -= 1;
+                    _lifeManager.CurrentHp -= 1;
 
                     // increase counter for Destroyed Platforms
                     _progressDetails.DestroyedPlatformsCount += 1;
@@ -73,8 +75,8 @@ namespace Platforms {
 
         // used here and in SwitchDino.cs
         public void DestroyPlatform() {
-            _audioSource.clip = destroySfx[Random.Range(0, destroySfx.Length)];
-            _audioSource.Play();
+            _destroyedSfx.clip = destroyedSfxClips[Random.Range(0, destroyedSfxClips.Length)];
+            _destroyedSfx.Play();
 
             Destroy(_sr);
             Destroy(_capsuleCollider2d);

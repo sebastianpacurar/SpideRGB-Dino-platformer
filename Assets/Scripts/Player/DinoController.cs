@@ -15,7 +15,7 @@ namespace Player {
 
         public bool IsHit { get; set; } // used to override all other animations by Hit animation
         public float MaxFallSpeed { get; set; } // set in GameManager.cs, based on GameDifficulty
-        
+
         [SerializeField] private LayerMask groundLayer;
         [SerializeField] private Transform groundedPos;
         [SerializeField] private SpriteRenderer shadowSprite;
@@ -25,6 +25,8 @@ namespace Player {
         private Animator _animator;
         private CinemachineVirtualCamera _cineMachineCam;
         private ParticleSystem _ps;
+
+        private AudioSource _jumpSfx;
 
         // used for "push on grapple" condition
         public bool IsGrounded() {
@@ -36,6 +38,7 @@ namespace Player {
             _rb = GetComponent<Rigidbody2D>();
             _sr = GetComponent<SpriteRenderer>();
             _animator = GetComponent<Animator>();
+            _jumpSfx = GetComponent<AudioSource>();
         }
 
         private void Start() {
@@ -95,6 +98,7 @@ namespace Player {
                 case InputActionPhase.Performed:
                     if (IsGrounded()) {
                         _jumpPressed = true;
+                        _jumpSfx.Play();
                     }
 
                     break;

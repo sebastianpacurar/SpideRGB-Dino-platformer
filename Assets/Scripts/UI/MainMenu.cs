@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Menu {
+namespace UI {
     public class MainMenu : MonoBehaviour {
         public void StartSidekickScene() {
             SceneManager.LoadScene("Sidekick");
@@ -13,6 +13,14 @@ namespace Menu {
 
         public void StartSuperheroScene() {
             SceneManager.LoadScene("Superhero");
+        }
+
+        public void StartEpicheroScene() {
+            SceneManager.LoadScene("Epichero");
+        }
+
+        public void QuitGame() {
+            Application.Quit();
         }
     }
 }

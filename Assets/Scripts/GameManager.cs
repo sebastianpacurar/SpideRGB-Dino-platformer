@@ -45,9 +45,15 @@ public class GameManager : MonoBehaviour {
                 dinoController.MaxFallSpeed = -12.5f;
                 GameDifficulty = (int)Difficulty.Hero;
                 break;
-            case "SuperHero":
-                dinoController.MaxFallSpeed = -15f;
+            case "Superhero":
+                dinoController.MaxFallSpeed = -12.5f;
                 GameDifficulty = (int)Difficulty.Superhero;
+                break;
+            case "Epichero":
+                // disable Helper UI on Epic Hero difficulty
+                dinoObj.transform.Find("Canvas").gameObject.SetActive(false);
+                dinoController.MaxFallSpeed = -13.75f;
+                GameDifficulty = (int)Difficulty.Epichero;
                 break;
         }
 

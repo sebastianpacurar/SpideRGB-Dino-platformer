@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Menu.InGameMenu.SwapCanvas {
+namespace UI.InGameMenu.SwapCanvas {
     public class SwitchBottom : MonoBehaviour {
         [SerializeField] private GameObject[] leftArrows, rightArrows;
 

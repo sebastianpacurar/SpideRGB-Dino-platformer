@@ -15,7 +15,10 @@ EditorBuildSettings:
     path: Assets/Scenes/Hero.unity
     guid: 790dfed5e771dc16e9a002a50b8f30d9
   - enabled: 1
-    path: Assets/Scenes/SuperHero.unity
+    path: Assets/Scenes/Superhero.unity
     guid: dabbd3d794a7fc39e9c187689620bb9a
+  - enabled: 1
+    path: Assets/Scenes/Epichero.unity
+    guid: 7aac3fec46161723684fce46aa6d95bb
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: d598afe31ed9b28ccb6d75514e23be03, type: 2}

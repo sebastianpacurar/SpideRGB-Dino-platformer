@@ -12,7 +12,6 @@ TagManager:
   - GrappleArea
   - TopDinoContainer
   - BottomDinoContainer
-  - HpBar
   - Platform
   - Edge
   - EndGameBounds

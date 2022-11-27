@@ -3,9 +3,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Menu.InGameMenu {
+namespace UI.InGameMenu {
     public class DinoHp : MonoBehaviour {
-        private HpManager _dinoHpScript;
+        private LifeManager _lifeManager;
         private Image _img;
         [SerializeField] private TextMeshProUGUI hpVal;
 
@@ -14,7 +14,7 @@ namespace Menu.InGameMenu {
         }
 
         private void Start() {
-            _dinoHpScript = GameObject.FindGameObjectWithTag("HpBar").GetComponent<HpManager>();
+            _lifeManager = GameObject.FindGameObjectWithTag("Player").GetComponent<LifeManager>();
             hpVal = transform.Find("ValueTxt").GetComponent<TextMeshProUGUI>();
         }
 
@@ -23,8 +23,8 @@ namespace Menu.InGameMenu {
         }
 
         private void FillHpBar() {
-            _img.fillAmount = _dinoHpScript.CurrentHp / (float)HpManager.MaxHp;
-            hpVal.text = $"{_dinoHpScript.CurrentHp} / {(float)HpManager.MaxHp}";
+            _img.fillAmount = _lifeManager.CurrentHp / (float)LifeManager.MaxHp;
+            hpVal.text = $"{_lifeManager.CurrentHp} / {(float)LifeManager.MaxHp}";
         }
     }
 }

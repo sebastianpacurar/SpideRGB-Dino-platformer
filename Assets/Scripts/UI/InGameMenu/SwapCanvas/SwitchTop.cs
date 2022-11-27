@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Menu.InGameMenu.SwapCanvas {
+namespace UI.InGameMenu.SwapCanvas {
     public class SwitchTop : MonoBehaviour {
         [SerializeField] private GameObject[] leftDino, selectedDino, rightDino;
 
