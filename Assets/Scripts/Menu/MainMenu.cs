@@ -3,12 +3,16 @@ using UnityEngine.SceneManagement;
 
 namespace Menu {
     public class MainMenu : MonoBehaviour {
-        public void StartEasyDifficulty() {
-            SceneManager.LoadScene("Easy");
+        public void StartSidekickScene() {
+            SceneManager.LoadScene("Sidekick");
         }
 
-        public void StartHardDifficulty() {
-            SceneManager.LoadScene("Hard");
+        public void StartHeroScene() {
+            SceneManager.LoadScene("Hero");
+        }
+
+        public void StartSuperheroScene() {
+            SceneManager.LoadScene("Superhero");
         }
     }
 }

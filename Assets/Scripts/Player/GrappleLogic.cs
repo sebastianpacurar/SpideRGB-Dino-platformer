@@ -13,12 +13,13 @@ namespace Player {
         // the clicked platform node's RigidBody
         private Rigidbody2D _selectedNodeRb;
         private bool _isPulling, _isPushing;
+        private readonly float _grappleMaxDistance = 9f;
+
 
         private DinoController _controller;
 
         // used to prevent OnTriggerExit to deselect node if another platform exits the BoxCollider area
         public string SelectedPlatformName { get; private set; } = string.Empty;
-        public float GrappleMaxDistance { get; set; }
 
 
         private void Awake() {
@@ -99,12 +100,12 @@ namespace Player {
                 }
 
                 // Handle Push Grapple update
-                if (!_controller.IsGrounded() && _isPushing && _springJoint2D.distance <= GrappleMaxDistance) {
+                if (!_controller.IsGrounded() && _isPushing && _springJoint2D.distance <= _grappleMaxDistance) {
                     _springJoint2D.distance += 0.3f;
                 }
 
-                if (_springJoint2D.distance >= GrappleMaxDistance) {
-                    _springJoint2D.distance = GrappleMaxDistance;
+                if (_springJoint2D.distance >= _grappleMaxDistance) {
+                    _springJoint2D.distance = _grappleMaxDistance;
                 }
             } else {
                 _lineRenderer.enabled = false;

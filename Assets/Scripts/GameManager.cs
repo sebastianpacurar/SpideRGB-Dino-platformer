@@ -9,9 +9,6 @@ public class GameManager : MonoBehaviour {
     [SerializeField] private GameObject dinoSwapPanel;
     public int GameDifficulty { get; private set; }
 
-    // dino grapple collider
-    private BoxCollider2D _grappleArea;
-
     private void Awake() {
         if (Instance == null) {
             Instance = this;
@@ -37,28 +34,20 @@ public class GameManager : MonoBehaviour {
 
         if (scene.name.Equals("MainMenu")) return;
         var dinoObj = Instantiate(dino);
-        var grappleArea = dinoObj.transform.GetChild(4).GetComponent<BoxCollider2D>();
         var dinoController = dinoObj.GetComponent<DinoController>();
-        var grappleLogic = dinoObj.GetComponent<GrappleLogic>();
 
         switch (scene.name) {
-            case "Easy":
-                grappleLogic.GrappleMaxDistance = 9f;
-                dinoController.Speed = 10f;
-                dinoController.JumpForce = 20f;
+            case "Sidekick":
                 dinoController.MaxFallSpeed = -10f;
-                grappleArea.offset = new Vector2(0, 6);
-                grappleArea.size = new Vector2(20, 10);
-                GameDifficulty = (int)Difficulty.Easy;
+                GameDifficulty = (int)Difficulty.Sidekick;
                 break;
-            case "Hard":
-                grappleLogic.GrappleMaxDistance = 9f;
-                dinoController.Speed = 8f;
-                dinoController.JumpForce = 20f;
+            case "Hero":
+                dinoController.MaxFallSpeed = -12.5f;
+                GameDifficulty = (int)Difficulty.Hero;
+                break;
+            case "SuperHero":
                 dinoController.MaxFallSpeed = -15f;
-                grappleArea.offset = new Vector2(0, 6);
-                grappleArea.size = new Vector2(20, 10);
-                GameDifficulty = (int)Difficulty.Hard;
+                GameDifficulty = (int)Difficulty.Superhero;
                 break;
         }
 

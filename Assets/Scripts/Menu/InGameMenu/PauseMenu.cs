@@ -1,4 +1,5 @@
 using Player;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -9,16 +10,25 @@ namespace Menu.InGameMenu {
         private PlayerControls _controls;
         private FailedMenu _failedMenu;
         private SuccessMenu _successMenu;
+        private ProgressDetails _progressDetails;
+        [SerializeField] private TextMeshProUGUI destroyedPlatformsTxt;
+        [SerializeField] private TextMeshProUGUI timeTxt;
 
         private bool _isPaused;
 
         private void Awake() {
             _controls = new PlayerControls();
+            _failedMenu = GetComponent<FailedMenu>();
+            _successMenu = GetComponent<SuccessMenu>();
         }
 
         private void Start() {
-            _failedMenu = GameObject.FindGameObjectWithTag("InGameUi").GetComponent<FailedMenu>();
-            _successMenu = GameObject.FindGameObjectWithTag("InGameUi").GetComponent<SuccessMenu>();
+            _progressDetails = transform.Find("Dino Progress UI").GetComponent<ProgressDetails>();
+        }
+
+        private void Update() {
+            destroyedPlatformsTxt.text = $"Destroyed Platforms: {_progressDetails.DestroyedPlatformsCount}";
+            timeTxt.text = _progressDetails.FormattedTime;
         }
 
         private void ToggleMenu(InputAction.CallbackContext ctx) {

@@ -10,17 +10,14 @@ namespace Player {
         private float _input;
         private bool _jumpPressed;
 
-        // used to override all other animations by Hit animation
-        public bool IsHit { get; set; }
+        private readonly float _moveSpeed = 10f;
+        private readonly float _jumpForce = 20f;
 
-        // set in GameManager.cs
-        public float Speed { get; set; } = 10f;
-        public float JumpForce { get; set; } = 20f;
-        public float MaxFallSpeed { get; set; } = -15f;
-
+        public bool IsHit { get; set; } // used to override all other animations by Hit animation
+        public float MaxFallSpeed { get; set; } // set in GameManager.cs, based on GameDifficulty
+        
         [SerializeField] private LayerMask groundLayer;
         [SerializeField] private Transform groundedPos;
-
         [SerializeField] private SpriteRenderer shadowSprite;
 
         private Rigidbody2D _rb;
@@ -44,7 +41,7 @@ namespace Player {
         private void Start() {
             _cineMachineCam = GameObject.FindGameObjectWithTag("CM2D").GetComponent<CinemachineVirtualCamera>();
             _cineMachineCam.Follow = transform;
-            _ps = transform.GetChild(0).GetComponent<ParticleSystem>();
+            _ps = transform.Find("Particle System").GetComponent<ParticleSystem>();
             name = $"{GetComponent<SwitchDino>().DinoType} Dino";
         }
 
@@ -64,11 +61,11 @@ namespace Player {
         private void ApplyVelocity() {
             if (_jumpPressed) {
                 var velocity = _rb.velocity;
-                _rb.velocity = new Vector2(velocity.x, velocity.y + JumpForce);
+                _rb.velocity = new Vector2(velocity.x, velocity.y + _jumpForce);
                 _jumpPressed = false;
             }
 
-            _rb.velocity = new Vector2(_input * Speed, _rb.velocity.y);
+            _rb.velocity = new Vector2(_input * _moveSpeed, _rb.velocity.y);
             if (_rb.velocity.y < MaxFallSpeed) {
                 _rb.velocity = new Vector2(_rb.velocity.x, MaxFallSpeed);
             }

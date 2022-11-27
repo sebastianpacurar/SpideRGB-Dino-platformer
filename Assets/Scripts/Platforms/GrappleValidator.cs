@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Platforms {
     public class GrappleValidator : MonoBehaviour {
-        private GameObject _grappleNodeObject;
+        [SerializeField] private GameObject grappleNode;
         private GrappleLogic _dinoGrappleScript;
         private SpriteRenderer _sr;
 
@@ -14,15 +14,13 @@ namespace Platforms {
 
         private void Start() {
             _dinoGrappleScript = GameObject.FindGameObjectWithTag("Player").GetComponent<GrappleLogic>();
-            _grappleNodeObject = transform.GetChild(1).gameObject;
+            MakeTransparent();
         }
 
-        private void OnTriggerEnter2D(Collider2D col) {
+        private void OnTriggerStay2D(Collider2D col) {
             if (col.gameObject.CompareTag("GrappleArea")) {
-                _grappleNodeObject.SetActive(true);
+                Reveal();
             }
-
-            _sr.color = _sr.color.WithAlpha(1f);
         }
 
         private void OnTriggerExit2D(Collider2D col) {
@@ -33,9 +31,18 @@ namespace Platforms {
                     _dinoGrappleScript.DeselectNode();
                 }
 
-                _grappleNodeObject.SetActive(false);
-                _sr.color = _sr.color.WithAlpha(0.5f);
+                MakeTransparent();
             }
+        }
+
+        private void Reveal() {
+            grappleNode.SetActive(true);
+            _sr.color = _sr.color.WithAlpha(1f);
+        }
+
+        private void MakeTransparent() {
+            grappleNode.SetActive(false);
+            _sr.color = _sr.color.WithAlpha(0.5f);
         }
     }
 }

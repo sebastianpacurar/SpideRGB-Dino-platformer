@@ -19,7 +19,7 @@ namespace Menu.InGameMenu {
         private void Start() {
             _dino = GameObject.FindGameObjectWithTag("Player");
             _endGameBounds = GameObject.FindGameObjectWithTag("EndGameBounds");
-            _distanceVal = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+            _distanceVal = transform.Find("ValueTxt").GetComponent<TextMeshProUGUI>();
         }
 
         private void Update() {

@@ -26,9 +26,9 @@ namespace Platforms {
 
             // set spawn rate based on difficulty
             _spawnTime = GameManager.Instance.GameDifficulty switch {
-                (int)Difficulty.Easy => 1f,
-                (int)Difficulty.Hard => 0.5f,
-                (int)Difficulty.Impossible => 0.25f,
+                (int)Difficulty.Sidekick => 1f,
+                (int)Difficulty.Hero => 0.5f,
+                (int)Difficulty.Superhero => 0.25f,
                 _ => 1f,
             };
 
@@ -38,33 +38,53 @@ namespace Platforms {
         private IEnumerator SpawnPlatforms() {
             while (true) {
                 yield return new WaitForSeconds(_spawnTime);
+                Vector2 pointA; // used for hard and impossible
+                Vector2 pointB; // used for hard and impossible
 
                 var platform = Instantiate(platforms[Random.Range(0, platforms.Length)], transform);
                 platform.name = $"{name} - {System.Guid.NewGuid().ToString()}";
 
-                // game is set on easy then make all platforms static
-                if (GameManager.Instance.GameDifficulty.Equals((int)Difficulty.Easy)) {
-                    platform.transform.GetChild(1).transform.GetChild(0).transform.position = Vector3.zero;
-                    platform.transform.GetChild(1).transform.GetChild(0).transform.position = Vector3.zero;
-                } else {
-                    var distance = Random.Range(5, 11);
+                var pos = platform.transform.position; // position of platform container
+                platform.transform.localScale = new Vector3(1.75f, 1.75f, pos.z); // scale the platform container by 1.75
 
-                    Vector2 pointA;
-                    Vector2 pointB;
+                switch (GameManager.Instance.GameDifficulty) {
+                    case (int)Difficulty.Hero:
+                        var distance = Random.Range(minInclusive: 5.0f, maxInclusive: 10.0f); // set a fixed distance for the points
 
-                    // 0 is X-axis, 1 is Y-axis
-                    if (Random.Range(0, 2).Equals(0)) {
-                        pointA = new Vector3(-distance, platform.transform.position.y);
-                        pointB = new Vector3(distance, platform.transform.position.y);
-                    } else {
-                        pointA = new Vector3(platform.transform.position.x, -distance);
-                        pointB = new Vector3(platform.transform.position.x, distance);
-                    }
+                        // 0 is X-axis, 1 is Y-axis
+                        if (Random.Range(0, 2).Equals(0)) {
+                            pointA = new Vector2(-distance, pos.y);
+                            pointB = new Vector2(distance, pos.y);
+                        } else {
+                            pointA = new Vector2(platform.transform.position.x, -distance);
+                            pointB = new Vector2(pos.x, distance);
+                        }
 
-                    platform.transform.GetChild(1).transform.GetChild(0).transform.position = pointA;
-                    platform.transform.GetChild(1).transform.GetChild(1).transform.position = pointB;
+                        platform.transform.GetChild(1).transform.GetChild(0).transform.position = pointA;
+                        platform.transform.GetChild(1).transform.GetChild(1).transform.position = pointB;
+                        break;
+
+                    case (int)Difficulty.Superhero:
+                        platform.transform.GetChild(1).transform.GetChild(2).gameObject.SetActive(true); // there are at least 3 patrol points and at most 4
+
+                        // logic is Distance (rand float between 5 and 10 inclusive) divided by random float between 1 and 3
+                        pointA = new Vector2(-Random.Range(minInclusive: 5.0f, maxInclusive: 10.0f) / Random.Range(minInclusive: 1f, maxInclusive: 3f), pos.y);
+                        pointB = new Vector2(Random.Range(minInclusive: 5.0f, maxInclusive: 10.0f) / Random.Range(minInclusive: 1f, maxInclusive: 3f), pos.y);
+                        var pointC = new Vector2(pos.x, -Random.Range(minInclusive: 5.0f, maxInclusive: 10.0f) / Random.Range(minInclusive: 1f, maxInclusive: 3f)); // using 3rd patrol point 
+
+                        platform.transform.GetChild(1).transform.GetChild(0).transform.position = pointA;
+                        platform.transform.GetChild(1).transform.GetChild(1).transform.position = pointB;
+                        platform.transform.GetChild(1).transform.GetChild(2).transform.position = pointC;
+
+                        // 1 means that there is a 4th patrol point
+                        if (Random.Range(0, 1).Equals(1)) {
+                            var pointD = new Vector2(platform.transform.position.x, Random.Range(minInclusive: 5.0f, maxInclusive: 10.0f) / Random.Range(minInclusive: 1f, maxInclusive: 3f)); // using 4th patrol point
+                            platform.transform.GetChild(1).transform.GetChild(3).gameObject.SetActive(true);
+                            platform.transform.GetChild(1).transform.GetChild(3).transform.position = pointD;
+                        }
+
+                        break;
                 }
-
 
                 // generation of platforms location
                 var cmTransform = _cm.transform.position;
@@ -72,15 +92,12 @@ namespace Platforms {
 
                 var rightPos = rightWall.localPosition;
                 var leftPos = leftWall.localPosition;
-                var pos = new Vector3(Random.Range(leftPos.x, rightPos.x), y, 0);
+                var finalPos = new Vector3(Random.Range(leftPos.x, rightPos.x), Random.Range(y, -y), 0);
 
-                // clamp x to X-axis cam view 
-                pos.x = Mathf.Clamp(pos.x, leftPos.x + _spriteWidth, rightPos.x - _spriteWidth);
-                // clamp y to 25% below and 25% above the top edge of the camera
-                pos.y = Mathf.Clamp(pos.y, y - _screenBounds.y / 2, y + _screenBounds.y / 2);
+                finalPos.x = Mathf.Clamp(finalPos.x, leftPos.x + _spriteWidth, rightPos.x - _spriteWidth); // clamp x to X-axis cam view 
+                finalPos.y = Mathf.Clamp(finalPos.y, y - _screenBounds.y / 2, y + _screenBounds.y / 2); // clamp y to 25% below and 25% above the top edge of the camera
 
-
-                platform.transform.position = pos;
+                platform.transform.position = finalPos;
             }
         }
     }

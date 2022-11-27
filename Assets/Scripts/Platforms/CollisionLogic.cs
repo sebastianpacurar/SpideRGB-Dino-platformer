@@ -15,18 +15,22 @@ namespace Platforms {
         private DinoController _controller;
         private ProgressDetails _progressDetails;
 
+        [SerializeField] private AudioClip[] destroySfx;
+        private AudioSource _audioSource;
+
         private void Awake() {
             _sr = GetComponent<SpriteRenderer>();
             _capsuleCollider2d = GetComponent<CapsuleCollider2D>();
+            _audioSource = GetComponent<AudioSource>();
         }
 
         private void Start() {
             _container = transform.parent.gameObject;
             _dinoHpScript = GameObject.FindGameObjectWithTag("HpBar").GetComponent<HpManager>();
             _controller = GameObject.FindGameObjectWithTag("Player").GetComponent<DinoController>();
-            _progressDetails = GameObject.FindGameObjectWithTag("InGameUi").transform.GetChild(2).GetComponent<ProgressDetails>();
+            _progressDetails = GameObject.FindGameObjectWithTag("InGameUi").transform.Find("Dino Progress UI").GetComponent<ProgressDetails>();
 
-            _ps = transform.GetChild(0).GetComponent<ParticleSystem>();
+            _ps = transform.Find("Particle System").GetComponent<ParticleSystem>();
             _emissionModule = _ps.emission;
         }
 
@@ -49,15 +53,7 @@ namespace Platforms {
                     // Destroy current platform and its container
                     DestroyPlatform();
                 }
-            }
-
-            if (col.gameObject.transform.parent.gameObject.CompareTag("Platform")) {
-                DestroyPlatform();
-            }
-        }
-
-        private void OnTriggerEnter2D(Collider2D col) {
-            if (col.gameObject.CompareTag("Edge")) {
+            } else if (col.gameObject.transform.parent.gameObject.CompareTag("Platform")) {
                 DestroyPlatform();
             }
         }
@@ -69,8 +65,17 @@ namespace Platforms {
             }
         }
 
+        private void OnTriggerEnter2D(Collider2D col) {
+            if (col.gameObject.CompareTag("Edge")) {
+                DestroyPlatform();
+            }
+        }
+
         // used here and in SwitchDino.cs
         public void DestroyPlatform() {
+            _audioSource.clip = destroySfx[Random.Range(0, destroySfx.Length)];
+            _audioSource.Play();
+
             Destroy(_sr);
             Destroy(_capsuleCollider2d);
             _emissionModule.enabled = true;

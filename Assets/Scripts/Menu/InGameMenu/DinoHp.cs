@@ -7,7 +7,7 @@ namespace Menu.InGameMenu {
     public class DinoHp : MonoBehaviour {
         private HpManager _dinoHpScript;
         private Image _img;
-        private TextMeshProUGUI _hpVal;
+        [SerializeField] private TextMeshProUGUI hpVal;
 
         private void Awake() {
             _img = GetComponent<Image>();
@@ -15,7 +15,7 @@ namespace Menu.InGameMenu {
 
         private void Start() {
             _dinoHpScript = GameObject.FindGameObjectWithTag("HpBar").GetComponent<HpManager>();
-            _hpVal = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+            hpVal = transform.Find("ValueTxt").GetComponent<TextMeshProUGUI>();
         }
 
         private void Update() {
@@ -24,7 +24,7 @@ namespace Menu.InGameMenu {
 
         private void FillHpBar() {
             _img.fillAmount = _dinoHpScript.CurrentHp / (float)HpManager.MaxHp;
-            _hpVal.text = $"{_dinoHpScript.CurrentHp} / {(float)HpManager.MaxHp}";
+            hpVal.text = $"{_dinoHpScript.CurrentHp} / {(float)HpManager.MaxHp}";
         }
     }
 }

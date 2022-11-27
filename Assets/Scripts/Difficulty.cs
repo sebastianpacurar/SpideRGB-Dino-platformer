@@ -1,5 +1,5 @@
 public enum Difficulty {
-    Easy,
-    Hard,
-    Impossible,
+    Sidekick,
+    Hero,
+    Superhero,
 }

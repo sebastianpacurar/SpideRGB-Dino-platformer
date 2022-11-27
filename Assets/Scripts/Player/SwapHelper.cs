@@ -10,8 +10,8 @@ namespace Player {
 
         private void Start() {
             _switchTopUiScript = GameObject.FindGameObjectWithTag("TopDinoContainer").GetComponent<SwitchTop>();
-            _left = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-            _right = transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+            _left = transform.Find("Q").GetComponent<TextMeshProUGUI>();
+            _right = transform.Find("E").GetComponent<TextMeshProUGUI>();
         }
 
         // update letter colors based on the SwapDino UI Top section's updated colors

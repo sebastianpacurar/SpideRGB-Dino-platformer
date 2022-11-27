@@ -9,10 +9,13 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 627728cfe623c39a5b045ca6a1465ffc
   - enabled: 1
-    path: Assets/Scenes/Easy.unity
+    path: Assets/Scenes/Sidekick.unity
     guid: 8aed269ab067d04468f8a8ecbbb0dff7
   - enabled: 1
-    path: Assets/Scenes/Hard.unity
+    path: Assets/Scenes/Hero.unity
     guid: 790dfed5e771dc16e9a002a50b8f30d9
+  - enabled: 1
+    path: Assets/Scenes/SuperHero.unity
+    guid: dabbd3d794a7fc39e9c187689620bb9a
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: d598afe31ed9b28ccb6d75514e23be03, type: 2}
