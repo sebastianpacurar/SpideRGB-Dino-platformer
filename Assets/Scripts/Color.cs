@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public static class MyColor {
@@ -5,4 +6,11 @@ public static class MyColor {
     public static Color Green => new(0.333f, 0.603f, 0f, 1f);
     public static Color Blue => new(0f, 0.7545424f, 1, 1f);
     public static Color White => new(1f, 1f, 1f, 1f);
+
+    // to avoid using Color.WithAlpha() from Unity.VisualScripting
+    public static void SetAlphaKey(SpriteRenderer sr, float val) {
+        var color = sr.color;
+        color.a = val;
+        sr.color = color;
+    }
 }

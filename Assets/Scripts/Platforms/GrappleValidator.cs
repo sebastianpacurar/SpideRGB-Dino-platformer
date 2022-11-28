@@ -1,5 +1,4 @@
 using Player;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Platforms {
@@ -24,25 +23,24 @@ namespace Platforms {
         }
 
         private void OnTriggerExit2D(Collider2D col) {
-            if (col.gameObject.CompareTag("GrappleArea")) {
-                // when the dino swings over (above) the platform, then deselect the node before disabling the object
-                // prevent deselection in case another platform exits the area
-                if (_dinoGrappleScript.SelectedPlatformName.Equals(transform.parent.name)) {
-                    _dinoGrappleScript.DeselectNode();
-                }
-
-                MakeTransparent();
+            if (!col.gameObject.CompareTag("GrappleArea")) return;
+            // when the dino swings over (above) the platform, then deselect the node before disabling the object
+            // prevent deselection in case another platform exits the area
+            if (_dinoGrappleScript.SelectedPlatformName.Equals(transform.parent.name)) {
+                _dinoGrappleScript.DeselectNode();
             }
+
+            MakeTransparent();
         }
 
         private void Reveal() {
             grappleNode.SetActive(true);
-            _sr.color = _sr.color.WithAlpha(1f);
+            MyColor.SetAlphaKey(_sr, 1f);
         }
 
         private void MakeTransparent() {
             grappleNode.SetActive(false);
-            _sr.color = _sr.color.WithAlpha(0.5f);
+            MyColor.SetAlphaKey(_sr, 0.5f);
         }
     }
 }

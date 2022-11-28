@@ -1,6 +1,5 @@
 using Player;
-using UI.InGameMenu;
-using Unity.VisualScripting;
+using UiComponent.InGameMenu;
 using UnityEngine;
 
 namespace Platforms {
@@ -41,7 +40,7 @@ namespace Platforms {
                 var dino = col.gameObject;
                 if (dino.name.Split(" ")[0].Equals(gameObject.tag)) {
                     dino.transform.SetParent(transform);
-                    _sr.color = _sr.color.WithAlpha(1f);
+                    MyColor.SetAlphaKey(_sr, 1f);
                 } else {
                     // activate Hit Animation
                     _controller.IsHit = true;
@@ -61,10 +60,9 @@ namespace Platforms {
         }
 
         private void OnCollisionExit2D(Collision2D col) {
-            if (col.gameObject.CompareTag("Player")) {
-                col.gameObject.transform.SetParent(null);
-                _sr.color = _sr.color.WithAlpha(0.5f);
-            }
+            if (!col.gameObject.CompareTag("Player")) return;
+            col.gameObject.transform.SetParent(null);
+            MyColor.SetAlphaKey(_sr, 0.5f);
         }
 
         private void OnTriggerEnter2D(Collider2D col) {

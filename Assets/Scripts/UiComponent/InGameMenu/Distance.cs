@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI.InGameMenu {
+namespace UiComponent.InGameMenu {
     public class Distance : MonoBehaviour {
         private GameObject _dino;
         private GameObject _endGameBounds;

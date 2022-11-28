@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-namespace UI.InGameMenu {
+namespace UiComponent.InGameMenu {
     public class PauseMenu : MonoBehaviour {
         [SerializeField] private GameObject panel;
         private PlayerControls _controls;
@@ -56,6 +56,13 @@ namespace UI.InGameMenu {
             panel.SetActive(false);
         }
 
+        // used for Retry btn
+        public void Retry() {
+            Time.timeScale = 1;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+
+        // used for Main Menu btn
         public void GoToMainMenu() {
             Time.timeScale = 1;
             SceneManager.LoadScene("MainMenu");

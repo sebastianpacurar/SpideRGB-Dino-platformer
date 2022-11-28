@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace UI.InGameMenu {
+namespace UiComponent.InGameMenu {
     public class CanvasAttachCam : MonoBehaviour {
         private Camera _mainCam;
         private Canvas _canvas;

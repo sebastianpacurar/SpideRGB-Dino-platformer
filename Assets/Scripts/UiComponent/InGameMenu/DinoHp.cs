@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI.InGameMenu {
+namespace UiComponent.InGameMenu {
     public class DinoHp : MonoBehaviour {
         private LifeManager _lifeManager;
         private Image _img;

@@ -1,5 +1,5 @@
 using Platforms;
-using UI.InGameMenu.SwapCanvas;
+using UiComponent.InGameMenu.SwapCanvas;
 using UnityEngine;
 using UnityEngine.InputSystem;
 

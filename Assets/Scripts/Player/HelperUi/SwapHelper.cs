@@ -1,5 +1,5 @@
 using TMPro;
-using UI.InGameMenu.SwapCanvas;
+using UiComponent.InGameMenu.SwapCanvas;
 using UnityEngine;
 
 namespace Player.HelperUi {

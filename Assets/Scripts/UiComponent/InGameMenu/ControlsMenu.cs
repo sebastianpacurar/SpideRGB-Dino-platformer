@@ -1,9 +1,9 @@
 using UnityEngine;
 
-namespace UI.InGameMenu {
+namespace UiComponent.InGameMenu {
     public class ControlsMenu : MonoBehaviour {
         [SerializeField] private GameObject panel;
-        public bool Active { get; set; }
+        public bool Active { get; private set; }
 
         public void Open() {
             Time.timeScale = 0;

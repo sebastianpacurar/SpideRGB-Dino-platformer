@@ -16,6 +16,8 @@ TagManager:
   - Edge
   - EndGameBounds
   - InGameUi
+  - DinoHelperUi
+  - Land
   layers:
   - Default
   - TransparentFX

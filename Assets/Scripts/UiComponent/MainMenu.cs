@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace UI {
+namespace UiComponent {
     public class MainMenu : MonoBehaviour {
         public void StartSidekickScene() {
             SceneManager.LoadScene("Sidekick");

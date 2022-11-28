@@ -1,4 +1,4 @@
-using UI.InGameMenu;
+using UiComponent.InGameMenu;
 using UnityEngine;
 
 namespace Player {

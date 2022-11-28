@@ -2,7 +2,7 @@ using Player;
 using TMPro;
 using UnityEngine;
 
-namespace UI.InGameMenu {
+namespace UiComponent.InGameMenu {
     public class DinoLives : MonoBehaviour {
         private LifeManager _dinoLifeScript;
 
