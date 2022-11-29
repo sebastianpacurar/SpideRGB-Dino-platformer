@@ -11,7 +11,7 @@ namespace UiComponent.InGameMenu {
         [SerializeField] private TextMeshProUGUI destroyedPlatformsTxt;
         [SerializeField] private TextMeshProUGUI timeTxt;
 
-        public bool Active { get; private set; }
+        public bool Active { get; set; } // handled in LifeManager.cs
 
         private void Start() {
             _dinoLifeScript = GameObject.FindGameObjectWithTag("Player").GetComponent<LifeManager>();
@@ -27,11 +27,10 @@ namespace UiComponent.InGameMenu {
         }
 
         private void Update() {
-            if (_dinoLifeScript.Lives != 0 || Active) return;
+            if (!Active) return;
             destroyedPlatformsTxt.text = $"Destroyed Platforms: {_progressDetails.DestroyedPlatformsCount}";
             timeTxt.text = _progressDetails.FormattedTime;
             Time.timeScale = 0;
-            Active = true;
             panel.SetActive(true);
         }
     }

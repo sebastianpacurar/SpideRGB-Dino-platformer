@@ -62,6 +62,7 @@ namespace Player {
 
         // first check for the jump functionality, then update on X axis
         private void ApplyVelocity() {
+            if (_rb.bodyType != RigidbodyType2D.Dynamic) return;
             if (_jumpPressed) {
                 var velocity = _rb.velocity;
                 _rb.velocity = new Vector2(velocity.x, velocity.y + _jumpForce);

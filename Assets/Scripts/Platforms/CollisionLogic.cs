@@ -33,6 +33,7 @@ namespace Platforms {
             _progressDetails = GameObject.FindGameObjectWithTag("InGameUi").transform.Find("Dino Progress UI").GetComponent<ProgressDetails>();
             _ps = transform.Find("Particle System").GetComponent<ParticleSystem>();
             _emissionModule = _ps.emission;
+            AudioListener.volume = 0.5f;
         }
 
         private void OnCollisionEnter2D(Collision2D col) {
@@ -42,7 +43,7 @@ namespace Platforms {
                     dino.transform.SetParent(transform);
                     MyColor.SetAlphaKey(_sr, 1f);
                 } else {
-                    // activate Hit Animation
+                    // activate Dino Hit Animation
                     _controller.IsHit = true;
 
                     // decrease Hp with 1 unit
