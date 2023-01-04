@@ -4,6 +4,7 @@ namespace Player {
     public class SwapAnimationEvent : MonoBehaviour {
         private SpriteRenderer _dino;
         private Animator _animator;
+        private static readonly int Active = Animator.StringToHash("active");
 
         private void Awake() {
             _animator = GetComponent<Animator>();
@@ -25,7 +26,7 @@ namespace Player {
 
         // set swap animation back to idle 
         private void DeactivateSwap() {
-            _animator.SetBool("active", false);
+            _animator.SetBool(Active, false);
         }
     }
 }

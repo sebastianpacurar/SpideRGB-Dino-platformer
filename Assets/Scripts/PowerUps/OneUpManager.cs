@@ -29,7 +29,6 @@ namespace PowerUps {
                 (int)Difficulty.Sidekick => 5f,
                 (int)Difficulty.Hero => 5f,
                 (int)Difficulty.Superhero => 4f,
-                (int)Difficulty.Epichero => 3f,
                 _ => 1f,
             };
 

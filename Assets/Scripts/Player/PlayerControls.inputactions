@@ -169,10 +169,10 @@
                 {
                     "name": "",
                     "id": "f0cbd19b-276e-4add-a4f3-8838977e6180",
-                    "path": "<Keyboard>/escape",
+                    "path": "<Keyboard>/p",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard&Mouse",
                     "action": "Esc",
                     "isComposite": false,
                     "isPartOfComposite": false

@@ -29,7 +29,6 @@ namespace Platforms {
                 (int)Difficulty.Sidekick => 0.75f,
                 (int)Difficulty.Hero => 0.5f,
                 (int)Difficulty.Superhero => 0.25f,
-                (int)Difficulty.Epichero => 0.15f,
                 _ => 1f,
             };
 
@@ -66,7 +65,6 @@ namespace Platforms {
                         break;
 
                     case (int)Difficulty.Superhero:
-                    case (int)Difficulty.Epichero:
                         platform.transform.GetChild(1).transform.GetChild(2).gameObject.SetActive(true); // there are at least 3 patrol points and at most 4
 
                         // logic is Distance (rand float between 5 and 10 inclusive) divided by random float between 1 and 3

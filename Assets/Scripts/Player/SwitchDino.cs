@@ -11,7 +11,6 @@ namespace Player {
         private ParticleSystem _ps;
 
         [SerializeField] private AnimatorOverrideController[] overrideControllers;
-        [SerializeField] private AudioSource swapSfx;
         private Animator _animator;
         private PlayerControls _playerControls;
         private CollisionLogic _parentPlatform;
@@ -21,6 +20,7 @@ namespace Player {
         private SwitchBottom _bottomUiContainer;
 
         private bool _btnCooldown;
+        private static readonly int Active = Animator.StringToHash("active");
 
         private void Awake() {
             _playerControls = new PlayerControls();
@@ -102,9 +102,8 @@ namespace Player {
         }
 
         private void PerformSwap(string color) {
-            _swapAnimator.SetBool("active", true);
+            _swapAnimator.SetBool(Active, true);
             SetDino(color);
-            swapSfx.Play();
         }
 
         // set the correct Particle System start color

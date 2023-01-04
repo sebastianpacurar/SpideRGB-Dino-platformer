@@ -3,6 +3,7 @@ using UnityEngine;
 namespace UiComponent.InGameMenu.SwapCanvas {
     public class SwitchTop : MonoBehaviour {
         [SerializeField] private GameObject[] leftDino, selectedDino, rightDino;
+        private static readonly int Selected = Animator.StringToHash("selected");
 
         public void Swap(string oldColor, string newColor, string direction) {
             var switchWith = direction.Equals("left") ? leftDino : rightDino;
@@ -11,7 +12,7 @@ namespace UiComponent.InGameMenu.SwapCanvas {
             foreach (var obj in selectedDino) {
                 obj.SetActive(obj.CompareTag(newColor));
                 if (obj.activeSelf) {
-                    obj.GetComponent<Animator>().SetBool("selected", obj.CompareTag(newColor));
+                    obj.GetComponent<Animator>().SetBool(Selected, obj.CompareTag(newColor));
                 }
             }
 
@@ -19,7 +20,7 @@ namespace UiComponent.InGameMenu.SwapCanvas {
             foreach (var obj in switchWith) {
                 obj.SetActive(obj.CompareTag(oldColor));
                 if (obj.activeSelf) {
-                    obj.GetComponent<Animator>().SetBool("selected", false);
+                    obj.GetComponent<Animator>().SetBool(Selected, false);
                 }
             }
         }

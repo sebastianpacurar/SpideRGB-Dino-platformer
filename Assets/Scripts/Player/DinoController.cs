@@ -14,7 +14,7 @@ namespace Player {
         private readonly float _jumpForce = 20f;
 
         public bool IsHit { get; set; } // used to override all other animations by Hit animation
-        public float MaxFallSpeed { get; set; } // set in GameManager.cs, based on GameDifficulty
+        private float _maxFallSpeed;
 
         [SerializeField] private LayerMask groundLayer;
         [SerializeField] private Transform groundedPos;
@@ -25,8 +25,7 @@ namespace Player {
         private Animator _animator;
         private CinemachineVirtualCamera _cineMachineCam;
         private ParticleSystem _ps;
-
-        private AudioSource _jumpSfx;
+        private static readonly int State = Animator.StringToHash("state");
 
         // used for "push on grapple" condition
         public bool IsGrounded() {
@@ -38,10 +37,16 @@ namespace Player {
             _rb = GetComponent<Rigidbody2D>();
             _sr = GetComponent<SpriteRenderer>();
             _animator = GetComponent<Animator>();
-            _jumpSfx = GetComponent<AudioSource>();
         }
 
         private void Start() {
+            _maxFallSpeed = GameManager.Instance.GameDifficulty switch {
+                (int)Difficulty.Sidekick => -10f,
+                (int)Difficulty.Hero => -12.5f,
+                (int)Difficulty.Superhero => -12.5f,
+                _ => -10f,
+            };
+
             _cineMachineCam = GameObject.FindGameObjectWithTag("CM2D").GetComponent<CinemachineVirtualCamera>();
             _cineMachineCam.Follow = transform;
             _ps = transform.Find("Particle System").GetComponent<ParticleSystem>();
@@ -70,8 +75,8 @@ namespace Player {
             }
 
             _rb.velocity = new Vector2(_input * _moveSpeed, _rb.velocity.y);
-            if (_rb.velocity.y < MaxFallSpeed) {
-                _rb.velocity = new Vector2(_rb.velocity.x, MaxFallSpeed);
+            if (_rb.velocity.y < _maxFallSpeed) {
+                _rb.velocity = new Vector2(_rb.velocity.x, _maxFallSpeed);
             }
         }
 
@@ -99,7 +104,6 @@ namespace Player {
                 case InputActionPhase.Performed:
                     if (IsGrounded()) {
                         _jumpPressed = true;
-                        _jumpSfx.Play();
                     }
 
                     break;
@@ -133,7 +137,7 @@ namespace Player {
                 _animState = DinoAnimState.Hit;
             }
 
-            _animator.SetInteger("state", (int)_animState);
+            _animator.SetInteger(State, (int)_animState);
         }
 
         private void FlipDino() {

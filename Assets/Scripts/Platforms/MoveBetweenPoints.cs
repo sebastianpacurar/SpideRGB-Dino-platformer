@@ -8,6 +8,7 @@ namespace Platforms {
 
         private float _speed;
         private Animator _animator;
+        private static readonly int Active = Animator.StringToHash("active");
 
         private void Awake() {
             _animator = GetComponent<Animator>();
@@ -15,13 +16,12 @@ namespace Platforms {
             _speed = GameManager.Instance.GameDifficulty switch {
                 (int)Difficulty.Hero => Random.Range(2.0f, 4.0f),
                 (int)Difficulty.Superhero => Random.Range(4.0f, 5.0f),
-                (int)Difficulty.Epichero => Random.Range(5.0f, 7.0f),
                 _ => 0f,
             };
         }
 
         private void Start() {
-            _animator.SetBool("active", _speed > 0f);
+            _animator.SetBool(Active, _speed > 0f);
         }
 
         private void Update() {

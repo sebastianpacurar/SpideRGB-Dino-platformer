@@ -13,14 +13,10 @@ namespace Platforms {
         private LifeManager _lifeManager;
         private DinoController _controller;
         private ProgressDetails _progressDetails;
-
-        [SerializeField] private AudioClip[] destroyedSfxClips;
-        private AudioSource _destroyedSfx;
-
+        
         private void Awake() {
             _sr = GetComponent<SpriteRenderer>();
             _capsuleCollider2d = GetComponent<CapsuleCollider2D>();
-            _destroyedSfx = GetComponent<AudioSource>();
         }
 
         private void Start() {
@@ -74,9 +70,6 @@ namespace Platforms {
 
         // used here and in SwitchDino.cs
         public void DestroyPlatform() {
-            _destroyedSfx.clip = destroyedSfxClips[Random.Range(0, destroyedSfxClips.Length)];
-            _destroyedSfx.Play();
-
             Destroy(_sr);
             Destroy(_capsuleCollider2d);
             _emissionModule.enabled = true;

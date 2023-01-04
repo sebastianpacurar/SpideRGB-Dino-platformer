@@ -10,6 +10,7 @@ namespace Player {
         private FailedMenu _failedMenu;
         private Rigidbody2D _rb;
         private CapsuleCollider2D _capsuleCollider2D;
+        private static readonly int Death = Animator.StringToHash("death");
 
         private void Awake() {
             _animator = GetComponent<Animator>();
@@ -33,7 +34,7 @@ namespace Player {
             if (Lives != 0) return;
             _rb.bodyType = RigidbodyType2D.Static;
             _capsuleCollider2D.enabled = false;
-            _animator.SetTrigger("death");
+            _animator.SetTrigger(Death);
         }
 
         // animation event to trigger Failed Menu

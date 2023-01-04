@@ -5,13 +5,12 @@ namespace PowerUps {
     public class OneUpLogic : MonoBehaviour {
         private Animator _animator;
         private Rigidbody2D _rb;
-        private AudioSource _collectSfx;
         private LifeManager _lifeManager;
+        private static readonly int Collected = Animator.StringToHash("collected");
 
         private void Awake() {
             _animator = GetComponent<Animator>();
             _rb = GetComponent<Rigidbody2D>();
-            _collectSfx = GetComponent<AudioSource>();
         }
 
         private void Start() {
@@ -21,12 +20,11 @@ namespace PowerUps {
         private void OnCollisionEnter2D(Collision2D col) {
             if (col.gameObject.CompareTag("Player")) {
                 _lifeManager.Lives += 1;
-                _collectSfx.Play();
                 CollectSelf();
             }
 
             // set as child of platform
-            if (col.gameObject.CompareTag("Platform")) {
+            if (col.gameObject.name.EndsWith("Platform")) {
                 transform.SetParent(col.gameObject.transform);
             }
 
@@ -45,7 +43,7 @@ namespace PowerUps {
 
         private void CollectSelf() {
             _rb.bodyType = RigidbodyType2D.Static;
-            _animator.SetTrigger("collected");
+            _animator.SetTrigger(Collected);
         }
 
         // used as animation event
