@@ -40,7 +40,7 @@ namespace PowerUps {
                 yield return new WaitForSeconds(_spawnTime);
 
                 var strawberry = Instantiate(powerUp, transform);
-                strawberry.name = $"{name} - {System.Guid.NewGuid().ToString()}";
+                strawberry.name = $"berry - {System.Guid.NewGuid().ToString()}";
 
                 var cmTransform = _cm.transform.position;
                 var y = _screenBounds.y + cmTransform.y;

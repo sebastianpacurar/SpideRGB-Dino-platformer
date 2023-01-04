@@ -18,6 +18,7 @@ TagManager:
   - InGameUi
   - DinoHelperUi
   - Land
+  - OneUpManager
   layers:
   - Default
   - TransparentFX

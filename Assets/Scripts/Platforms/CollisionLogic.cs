@@ -13,7 +13,8 @@ namespace Platforms {
         private LifeManager _lifeManager;
         private DinoController _controller;
         private ProgressDetails _progressDetails;
-        
+        private Transform _oneUpManager;
+
         private void Awake() {
             _sr = GetComponent<SpriteRenderer>();
             _capsuleCollider2d = GetComponent<CapsuleCollider2D>();
@@ -21,6 +22,7 @@ namespace Platforms {
 
         private void Start() {
             _container = transform.parent.gameObject;
+            _oneUpManager = GameObject.FindGameObjectWithTag("OneUpManager").transform;
 
             var player = GameObject.FindGameObjectWithTag("Player");
             _lifeManager = player.GetComponent<LifeManager>();
@@ -70,6 +72,13 @@ namespace Platforms {
 
         // used here and in SwitchDino.cs
         public void DestroyPlatform() {
+            // handle attached berries in case of destruction
+            foreach (Transform child in gameObject.transform) {
+                if (child.name.StartsWith("berry")) {
+                    child.SetParent(_oneUpManager);
+                }
+            }
+
             Destroy(_sr);
             Destroy(_capsuleCollider2d);
             _emissionModule.enabled = true;
